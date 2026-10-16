@@ -1782,6 +1782,7 @@
           <div class="step-connector" id="stepConnector2"></div>
           <div class="step-dot" id="stepDot3" title="Step 3: Class">3</div>
         </div>
+        <button type="button" class="btn-close-onboarding" id="btnCloseOnboardingModal" aria-label="Close board selection" style="background: none; border: none; font-size: 1.6rem; color: #123B70; cursor: pointer; padding: 0.2rem 0.6rem; border-radius: 6px; line-height: 1; margin-left: 1rem;">&times;</button>
       </div>
 
       <!-- Welcome Hero Header -->
@@ -2177,7 +2178,7 @@
         </label>
         <div class="chapter-modal-footer-btns">
           <button type="button" class="btn btn-secondary btn-sm" id="btnCloseChapterModal">Close</button>
-          <button type="button" class="btn btn-primary btn-sm" id="btnAskLearnMate AIChapter">
+          <button type="button" class="btn btn-primary btn-sm" id="btnAskMiloChapter">
             <svg width="16" height="16" style="vertical-align:-2px; margin-right:4px;"><use href="#icon-ai-tutor"></use></svg>
             <span>Ask LearnMate AI About This Chapter</span> ✨
           </button>
@@ -2249,11 +2250,6 @@
     </div>
   </footer>
 
-    <!-- Supabase Official JS SDK & Client Data Layer -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase-client.js"></script>
-  <script src="syllabus-data.js"></script>
-  <script src="script.js"></script>
 
   <!-- ===================================================================
        SUPABASE STUDENT AUTHENTICATION MODAL (Login & Registration)
@@ -2312,6 +2308,15 @@
 
     </div>
   </div>
+
+  <!-- Modular Educational Content Data Layer & Controller -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js?v=2.2"></script>
+  <script src="data/learning-resources.js?v=2.2"></script>
+  <script src="data/notes-data.js?v=2.2"></script>
+  <script src="data/questions-data.js?v=2.2"></script>
+  <script src="syllabus-data.js?v=2.2"></script>
+  <script src="script.js?v=2.2"></script>
 
 </body>
 </html>

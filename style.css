@@ -3300,18 +3300,21 @@ button, input, select, textarea {
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   z-index: 10000;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
   transition: opacity 0.35s ease, visibility 0.35s ease;
 }
 
 .onboarding-modal-backdrop.open {
+  display: flex;
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 }
 
 .onboarding-modal-container {

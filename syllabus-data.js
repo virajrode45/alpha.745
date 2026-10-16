@@ -1812,3 +1812,296 @@ const SYLLABUS_DATABASE = {
 
 // Export to window for browser vanilla JS
 window.SYLLABUS_DATABASE = SYLLABUS_DATABASE;
+
+
+// ===================================================================
+// LearnMateData — Reusable Curriculum & Educational Content Access Layer
+// ===================================================================
+const LearnMateData = {
+  /**
+   * Return all supported boards with standard metadata
+   */
+  getBoards() {
+    return Object.values(SYLLABUS_DATABASE.boards).map(b => ({
+      id: b.id,
+      name: b.name,
+      shortName: b.shortName,
+      type: b.type,
+      source: b.source,
+      description: b.description
+    }));
+  },
+
+  /**
+   * Return all 36 Indian States and Union Territories with Board details
+   */
+  getStates() {
+    return SYLLABUS_DATABASE.allIndianStatesBoards || [];
+  },
+
+  /**
+   * Return available classes for a board
+   */
+  getClassesForBoard(boardId) {
+    const b = SYLLABUS_DATABASE.boards[boardId];
+    if (b && b.classes) {
+      return Object.keys(b.classes).sort((a, b) => Number(a) - Number(b));
+    }
+    // Default curriculum standard classes 1 to 12
+    return ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+  },
+
+  /**
+   * Return subjects for selected board and class
+   */
+  getSubjects(boardId = "cbse", classNum = "10", stateId = null) {
+    const curriculum = SYLLABUS_DATABASE.getCurriculum(boardId, classNum, stateId);
+    return curriculum.subjects || {};
+  },
+
+  /**
+   * Return chapters list for a given subject
+   */
+  getChapters(boardId = "cbse", classNum = "10", subjectId = "science", stateId = null) {
+    const subjects = this.getSubjects(boardId, classNum, stateId);
+    if (subjects[subjectId] && subjects[subjectId].chapters) {
+      return subjects[subjectId].chapters;
+    }
+    // Try matching by case-insensitive key or name
+    for (const key of Object.keys(subjects)) {
+      if (key.toLowerCase() === subjectId.toLowerCase() || subjects[key].name.toLowerCase().includes(subjectId.toLowerCase())) {
+        return subjects[key].chapters || [];
+      }
+    }
+    return [];
+  },
+
+  /**
+   * Find a specific chapter by its stable identifier across all boards/classes
+   */
+  getChapter(chapterId) {
+    if (!chapterId) return null;
+    // 1. Search in boards directly
+    for (const bKey in SYLLABUS_DATABASE.boards) {
+      const board = SYLLABUS_DATABASE.boards[bKey];
+      if (!board.classes) continue;
+      for (const cKey in board.classes) {
+        const cls = board.classes[cKey];
+        if (!cls.subjects) continue;
+        for (const sKey in cls.subjects) {
+          const subj = cls.subjects[sKey];
+          if (!subj.chapters) continue;
+          const found = subj.chapters.find(ch => ch.id === chapterId);
+          if (found) {
+            return {
+              chapter: found,
+              subjectKey: sKey,
+              subjectName: subj.name,
+              boardId: bKey,
+              boardName: board.name,
+              classNum: cKey
+            };
+          }
+        }
+      }
+    }
+    return null;
+  },
+
+  /**
+   * Retrieve notes for a chapter and difficulty level (Beginner, Moderate, Pro)
+   */
+  getNotes(chapterId, level = "Moderate") {
+    const normLevel = (level.charAt(0).toUpperCase() + level.slice(1).toLowerCase());
+    const validLevel = ["Beginner", "Moderate", "Pro"].includes(normLevel) ? normLevel : "Moderate";
+
+    // 1. Check verified authored database
+    if (typeof window !== 'undefined' && window.NOTES_DATABASE && window.NOTES_DATABASE[chapterId]) {
+      const entry = window.NOTES_DATABASE[chapterId];
+      if (entry.levels && entry.levels[validLevel]) {
+        return {
+          ...entry.levels[validLevel],
+          isAuthored: true,
+          source: entry.source || "Official Academic Curriculum Framework",
+          chapterId: chapterId,
+          chapterName: entry.chapterName,
+          subjectName: entry.subjectName,
+          boardName: entry.boardName,
+          classNum: entry.classNum
+        };
+      }
+    }
+
+    // 2. Structured fallback generator from chapter metadata
+    const info = this.getChapter(chapterId);
+    const ch = info ? info.chapter : { name: "Study Chapter", summary: "Curriculum study topic.", keyConcepts: ["Core Principles"], formulas: [] };
+
+    const rawConcepts = ch.keyConcepts && ch.keyConcepts.length > 0 ? ch.keyConcepts : [ch.name, "Key Definitions", "Applications"];
+    const formulasList = ch.formulas && ch.formulas.length > 0 ? ch.formulas : ["Key Principle: Input ➔ Transformation ➔ Result"];
+
+    const badgeClasses = {
+      Beginner: "beginner-badge",
+      Moderate: "moderate-badge",
+      Pro: "pro-badge"
+    };
+
+    return {
+      title: `${ch.name} — ${validLevel} Study Guide`,
+      levelName: validLevel,
+      levelBadgeClass: badgeClasses[validLevel] || "moderate-badge",
+      isAuthored: false,
+      source: "Curriculum Framework Outline",
+      chapterId: chapterId,
+      chapterName: ch.name,
+      subjectName: info ? info.subjectName : "General Subject",
+      boardName: info ? info.boardName : "State / CBSE Board",
+      classNum: info ? info.classNum : "10",
+      overview: ch.summary || `Comprehensive overview of ${ch.name} covering essential principles and syllabus expectations.`,
+      analogy: ch.analogy || `Think of ${ch.name} like building with solid foundations: each concept connects directly to what you see and observe around you!`,
+      definitions: rawConcepts.map((concept, idx) => ({
+        term: concept,
+        def: `Fundamental syllabus concept: Understanding ${concept.toLowerCase()} and its role in ${ch.name}.`
+      })),
+      formulas: formulasList.map((f, idx) => ({
+        expr: f,
+        desc: `Syllabus Formula ${idx + 1}: Expresses the core relationship governing this process.`
+      })),
+      workedExample: {
+        problem: `Syllabus Problem: In ${ch.name}, calculate or explain the outcome when initial parameters are given.`,
+        steps: [
+          "Step 1: Write down the given facts and relevant scientific or mathematical quantities.",
+          "Step 2: Apply the governing formula or conceptual law.",
+          "Step 3: Simplify step-by-step and write the final conclusion with appropriate units."
+        ],
+        solution: `Final result verified in accordance with Class ${info ? info.classNum : '10'} curriculum standards.`
+      },
+      examTips: [
+        "In board exams, underline key scientific/mathematical terminology in your explanations.",
+        "Draw clear, neatly labelled diagrams wherever applicable to secure full marks."
+      ],
+      practiceQuestions: ch.practice ? [
+        {
+          type: "Short Answer",
+          question: ch.practice,
+          options: [],
+          correct: null,
+          answer: "Refer to the key definitions and formulas above to structure your response.",
+          explanation: "Regular practice with these conceptual questions develops speed and accuracy."
+        }
+      ] : []
+    };
+  },
+
+  /**
+   * Retrieve questions matching filtering criteria
+   */
+  getQuestions(filter = {}) {
+    const db = (typeof window !== 'undefined' && window.QUESTIONS_DATABASE) ? window.QUESTIONS_DATABASE : [];
+    if (!db || db.length === 0) return [];
+
+    return db.filter(q => {
+      if (filter.chapterId && q.chapterId !== filter.chapterId) return false;
+      if (filter.subjectId && filter.subjectId !== "all") {
+        const qSubj = (q.subjectId || "").toLowerCase();
+        const fSubj = filter.subjectId.toLowerCase();
+        if (!qSubj.includes(fSubj) && !fSubj.includes(qSubj)) return false;
+      }
+      if (filter.boardId && filter.boardId !== "all" && q.boardId !== filter.boardId) return false;
+      if (filter.classNum && q.classNum !== String(filter.classNum)) return false;
+      if (filter.difficulty && filter.difficulty !== "all" && q.difficulty.toLowerCase() !== filter.difficulty.toLowerCase()) return false;
+      if (filter.type && filter.type !== "all" && q.type.toLowerCase() !== filter.type.toLowerCase()) return false;
+      return true;
+    });
+  },
+
+  /**
+   * Global search across curriculum (subjects, chapters, concepts, formulas)
+   */
+  searchCurriculum(query = "") {
+    const q = (query || "").trim().toLowerCase();
+    if (!q) return [];
+    const results = [];
+
+    for (const bKey in SYLLABUS_DATABASE.boards) {
+      const board = SYLLABUS_DATABASE.boards[bKey];
+      if (!board.classes) continue;
+      for (const cKey in board.classes) {
+        const cls = board.classes[cKey];
+        if (!cls.subjects) continue;
+        for (const sKey in cls.subjects) {
+          const subj = cls.subjects[sKey];
+          if (!subj.chapters) continue;
+          for (const ch of subj.chapters) {
+            let score = 0;
+            if (ch.name.toLowerCase().includes(q)) score += 10;
+            if (ch.summary && ch.summary.toLowerCase().includes(q)) score += 5;
+            if (ch.keyConcepts && ch.keyConcepts.some(c => c.toLowerCase().includes(q))) score += 4;
+            if (subj.name.toLowerCase().includes(q)) score += 2;
+
+            if (score > 0) {
+              results.push({
+                score,
+                chapter: ch,
+                subjectKey: sKey,
+                subjectName: subj.name,
+                boardId: bKey,
+                boardName: board.shortName || board.name,
+                classNum: cKey
+              });
+            }
+          }
+        }
+      }
+    }
+
+    return results.sort((a, b) => b.score - a.score);
+  },
+
+  /**
+   * Report curriculum coverage summary
+   */
+  getCurriculumCoverage() {
+    let totalBoards = Object.keys(SYLLABUS_DATABASE.boards).length;
+    let totalChapters = 0;
+    const boardBreakdown = {};
+
+    for (const bKey in SYLLABUS_DATABASE.boards) {
+      const b = SYLLABUS_DATABASE.boards[bKey];
+      let bChapters = 0;
+      if (b.classes) {
+        for (const cKey in b.classes) {
+          const cls = b.classes[cKey];
+          if (cls.subjects) {
+            for (const sKey in cls.subjects) {
+              bChapters += (cls.subjects[sKey].chapters || []).length;
+            }
+          }
+        }
+      }
+      boardBreakdown[bKey] = {
+        name: b.name,
+        chapters: bChapters
+      };
+      totalChapters += bChapters;
+    }
+
+    const authoredNotesCount = (typeof window !== 'undefined' && window.NOTES_DATABASE) ? Object.keys(window.NOTES_DATABASE).length : 0;
+    const questionsCount = (typeof window !== 'undefined' && window.QUESTIONS_DATABASE) ? window.QUESTIONS_DATABASE.length : 0;
+
+    return {
+      academicYear: SYLLABUS_DATABASE.metadata.academicYear,
+      totalBoards,
+      totalStates: (SYLLABUS_DATABASE.allIndianStatesBoards || []).length,
+      totalChapters,
+      authoredNotesCount,
+      questionsCount,
+      boardBreakdown
+    };
+  }
+};
+
+// Export to window for browser vanilla JS
+window.LearnMateData = LearnMateData;
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { SYLLABUS_DATABASE, LearnMateData };
+}

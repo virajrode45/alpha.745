@@ -357,4 +357,190 @@
       }
     }
   };
+
+  // -------------------------------------------------------------------
+  // 6. Unified Data Provider Adapter (Database-Ready Architecture)
+  // -------------------------------------------------------------------
+  window.LearnMateDataProvider = {
+    // Current active provider: 'mock' (default) or 'supabase'
+    getProviderName: () => (supabaseClient ? "supabase" : "mock"),
+    isRemoteDatabaseConnected: () => Boolean(supabaseClient),
+
+    async getBoards() {
+      try {
+        const res = await fetch("/api/curriculum/boards");
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && json.data) return json.data;
+        }
+      } catch (e) {
+        console.debug("Backend fetch failed, falling back to local dataset:", e);
+      }
+      return (window.LearnMateData && typeof window.LearnMateData.getBoards === "function")
+        ? window.LearnMateData.getBoards()
+        : [];
+    },
+
+    async getStates() {
+      try {
+        const res = await fetch("/api/curriculum/states");
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && json.data) return json.data;
+        }
+      } catch (e) {}
+      return (window.SYLLABUS_DATABASE && window.SYLLABUS_DATABASE.allIndianStatesBoards) || [];
+    },
+
+    async getClasses(boardId = "cbse") {
+      try {
+        const res = await fetch(`/api/curriculum/classes?board=${encodeURIComponent(boardId)}`);
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && json.data) return json.data;
+        }
+      } catch (e) {}
+      return [{ class: "10", name: "Class 10" }, { class: "8", name: "Class 8" }];
+    },
+
+    async getSubjects(boardId = "cbse", classNum = "10", stateId = "") {
+      try {
+        const url = `/api/curriculum/subjects?board=${encodeURIComponent(boardId)}&classNum=${encodeURIComponent(classNum)}${stateId ? '&state=' + encodeURIComponent(stateId) : ''}`;
+        const res = await fetch(url);
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && json.data) return json.data;
+        }
+      } catch (e) {}
+      return (window.LearnMateData && typeof window.LearnMateData.getSubjects === "function")
+        ? window.LearnMateData.getSubjects(boardId, classNum, stateId)
+        : [];
+    },
+
+    async getChapters(boardId = "cbse", classNum = "10", subjectId = "science", stateId = "") {
+      try {
+        const url = `/api/curriculum/chapters?board=${encodeURIComponent(boardId)}&classNum=${encodeURIComponent(classNum)}&subject=${encodeURIComponent(subjectId)}${stateId ? '&state=' + encodeURIComponent(stateId) : ''}`;
+        const res = await fetch(url);
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && json.data) return json.data;
+        }
+      } catch (e) {}
+      return (window.LearnMateData && typeof window.LearnMateData.getChapters === "function")
+        ? window.LearnMateData.getChapters(boardId, classNum, subjectId, stateId)
+        : [];
+    },
+
+    async getNotes(chapterId, difficulty = "Moderate") {
+      try {
+        const res = await fetch(`/api/notes/${encodeURIComponent(chapterId)}?level=${encodeURIComponent(difficulty)}`);
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && json.data) return json.data;
+        }
+      } catch (e) {}
+      return (window.LearnMateData && typeof window.LearnMateData.getNotes === "function")
+        ? window.LearnMateData.getNotes(chapterId, difficulty)
+        : null;
+    },
+
+    async getQuestions(chapterId, difficulty = null, limit = null) {
+      try {
+        let url = `/api/questions?chapterId=${encodeURIComponent(chapterId || "")}`;
+        if (difficulty) url += `&difficulty=${encodeURIComponent(difficulty)}`;
+        if (limit) url += `&limit=${limit}`;
+        const res = await fetch(url);
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && json.data) return json.data;
+        }
+      } catch (e) {}
+      return (window.LearnMateData && typeof window.LearnMateData.getQuestions === "function")
+        ? window.LearnMateData.getQuestions(chapterId, difficulty)
+        : [];
+    },
+
+    async submitQuiz(chapterId, answers) {
+      try {
+        const res = await fetch("/api/quiz/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ chapterId, answers })
+        });
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && json.data) return json.data;
+        }
+      } catch (e) {}
+      return (window.LearnMateData && typeof window.LearnMateData.gradeQuiz === "function")
+        ? window.LearnMateData.gradeQuiz(chapterId, answers)
+        : { chapterId, score: 0, total: answers.length, percentage: 0 };
+    },
+
+    async saveQuizAttempt(attempt) {
+      if (window.LearnMateStorage && typeof window.LearnMateStorage.recordQuizAttempt === "function") {
+        window.LearnMateStorage.recordQuizAttempt(attempt);
+      }
+      try {
+        await fetch("/api/progress", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ quizAttempts: [attempt] })
+        });
+      } catch (e) {}
+    },
+
+    async getProgress(userId = "guest_student") {
+      try {
+        const res = await fetch(`/api/progress?userId=${encodeURIComponent(userId)}`);
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && json.data) return json.data;
+        }
+      } catch (e) {}
+      if (window.LearnMateStorage && typeof window.LearnMateStorage.getUserActivity === "function") {
+        return window.LearnMateStorage.getUserActivity();
+      }
+      return {};
+    },
+
+    async updateProgress(userId = "guest_student", progressData = {}) {
+      try {
+        const res = await fetch("/api/progress", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId, progress: progressData })
+        });
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && json.data) return json.data;
+        }
+      } catch (e) {}
+      return progressData;
+    },
+
+    async getStudyPlans(boardId = "cbse", classNum = "10") {
+      try {
+        const res = await fetch(`/api/study-plans?board=${encodeURIComponent(boardId)}&classNum=${encodeURIComponent(classNum)}`);
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && json.data) return json.data;
+        }
+      } catch (e) {}
+      return [];
+    },
+
+    async search(query) {
+      try {
+        const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && json.data) return json.data;
+        }
+      } catch (e) {}
+      return (window.LearnMateData && typeof window.LearnMateData.search === "function")
+        ? window.LearnMateData.search(query)
+        : { total: 0, results: {} };
+    }
+  };
 })();

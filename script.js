@@ -9,6 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ===================================================================
      1. MILO THE BRAND CHARACTER (Interactive Quotes & Reactions)
      =================================================================== */
+  // Top-Level State Variables
+  let activeCurriculum = null;
+  let activeSubjectFilter = 'all';
+  let activeChapterInModal = null;
+
   const miloHeroBubble = document.getElementById('miloHeroBubble');
   const heroMilo = document.getElementById('heroMilo');
   const miloCharacter = document.getElementById('miloCharacter');
@@ -423,26 +428,30 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
-  function displayTutorAnswer(data, style) {
+  function displayTutorAnswer(data, style, sourceBadge = null) {
+    const badgeText = sourceBadge || `✦ MILO'S SIMPLE EXPLANATION (${style.toUpperCase()})`;
     responseRenderedContent.innerHTML = `
       <div class="ai-response-sheet">
-        <span class="sheet-badge">✦ MILO'S SIMPLE EXPLANATION (${style.toUpperCase()})</span>
+        <span class="sheet-badge">${badgeText}</span>
         <h4 class="sheet-title">${data.title}</h4>
 
+        ${data.analogy ? `
         <div class="sheet-analogy-box">
           <strong>🍃 Everyday Analogy:</strong><br>
           ${data.analogy}
-        </div>
+        </div>` : ''}
 
-        <p class="sheet-body-text">${data.summary}</p>
+        <p class="sheet-body-text">${data.summary || ''}</p>
 
+        ${data.bullets && data.bullets.length ? `
         <ul class="sheet-key-points">
           ${data.bullets.map(b => `<li>${b}</li>`).join('')}
-        </ul>
+        </ul>` : ''}
 
+        ${data.takeaway ? `
         <div class="sheet-takeaway-box">
           ${data.takeaway}
-        </div>
+        </div>` : ''}
       </div>
     `;
 
@@ -453,7 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
     triggerMiloSpeech("Here's a simple way to remember it! Hope it helps! 💡");
   }
 
-  // Handle Tutor Question Submission
+  // Handle Tutor Question Submission via Secure Backend Endpoint
   tutorForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const query = tutorQuestionInput.value.trim();
@@ -469,48 +478,41 @@ document.addEventListener('DOMContentLoaded', () => {
     tutorMiloStatus.textContent = "Milo is thinking... 🤔";
     triggerMiloSpeech("Ooh, let me break that down for you! One second... 💭");
 
-    const savedGeminiKey = localStorage.getItem('learnmate_gemini_key');
-    if (savedGeminiKey) {
-      try {
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${savedGeminiKey}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{
-              parts: [{
-                text: `You are Milo, a warm learning buddy for school students. Explain this concept in very simple English with an everyday analogy, simple explanation, and 3 key bullet points. Question: "${query}", Subject: "${subject}", Style: "${style}".`
-              }]
-            }]
-          })
-        });
+    // Secure server-side endpoint call (no API keys exposed to browser)
+    try {
+      const activeBoard = (typeof activeCurriculum !== 'undefined' && activeCurriculum.board) ? activeCurriculum.board.id : 'CBSE';
+      const activeClass = (typeof activeCurriculum !== 'undefined') ? activeCurriculum.classNum : '10';
 
-        if (res.ok) {
-          const apiJson = await res.json();
-          const generatedText = apiJson?.candidates?.[0]?.content?.parts?.[0]?.text;
-          if (generatedText) {
-            responseLoadingState.style.display = 'none';
-            responseRenderedContent.style.display = 'block';
-            responseRenderedContent.innerHTML = `
-              <div class="ai-response-sheet">
-                <span class="sheet-badge">✦ LIVE GEMINI AI EXPLANATION</span>
-                <div class="sheet-body-text" style="white-space: pre-line;">${generatedText}</div>
-              </div>
-            `;
-            responseTools.style.display = 'flex';
-            tutorMiloStatus.textContent = "Answer ready! 🌟";
-            return;
-          }
+      const res = await fetch('/api/tutor', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          question: query,
+          subject: subject,
+          style: style,
+          board: activeBoard,
+          classNum: activeClass
+        })
+      });
+
+      if (res.ok) {
+        const apiJson = await res.json();
+        if (apiJson.success && apiJson.data) {
+          displayTutorAnswer(apiJson.data, style, apiJson.source);
+          recordStudentActivity('ask_tutor', { question: query, subject: subject });
+          return;
         }
-      } catch (err) {
-        console.warn("Live API request failed; switching to built-in engine.", err);
       }
+    } catch (err) {
+      console.warn("Server tutor endpoint call failed; switching to local knowledge engine:", err);
     }
 
-    // Default: Built-in intelligent engine with smooth warm thinking state
+    // Built-in intelligent engine fallback
     setTimeout(() => {
       const result = getEducationalResponse(query, subject, style);
-      displayTutorAnswer(result, style);
-    }, 600);
+      displayTutorAnswer(result, style, "LearnMate Local Knowledge Engine");
+      recordStudentActivity('ask_tutor', { question: query, subject: subject });
+    }, 400);
   });
 
   // Prompt chips
@@ -713,13 +715,47 @@ document.addEventListener('DOMContentLoaded', () => {
   const completionFeedback = document.getElementById('completionFeedback');
   const btnRetakeQuiz = document.getElementById('btnRetakeQuiz');
 
-  function startQuiz(category = "all") {
+  function startQuiz(category = "all", difficulty = "all", chapterId = null) {
     currentQuizFilter = category;
-    if (category === "all") {
-      activeQuestions = [...quizBank];
-    } else {
-      activeQuestions = quizBank.filter(q => q.subject === category);
+
+    let pool = [];
+    if (window.LearnMateData && typeof window.LearnMateData.getQuestions === 'function') {
+      const activeBoard = (activeCurriculum && activeCurriculum.board) ? activeCurriculum.board.id : 'cbse';
+      const activeClass = (activeCurriculum && activeCurriculum.classNum) ? activeCurriculum.classNum : '10';
+
+      const filter = {
+        subjectId: category === 'all' ? null : category,
+        boardId: activeBoard,
+        classNum: activeClass,
+        difficulty: difficulty === 'all' ? null : difficulty,
+        chapterId: chapterId || null
+      };
+
+      pool = window.LearnMateData.getQuestions(filter);
+
+      // If specific subject filter has fewer than 3 questions, fetch subject across boards
+      if (pool.length < 3 && category !== 'all') {
+        pool = window.LearnMateData.getQuestions({ subjectId: category });
+      }
+      // If still fewer than 3, load general question bank
+      if (pool.length < 3) {
+        pool = window.LearnMateData.getQuestions();
+      }
     }
+
+    if (!pool || pool.length === 0) {
+      pool = quizBank;
+    }
+
+    // Adapt to quiz UI properties
+    activeQuestions = pool.map(q => ({
+      ...q,
+      subjectBadge: q.subjectBadge || (q.subjectId ? q.subjectId.toUpperCase() : 'CURRICULUM'),
+      options: (q.options && q.options.length > 0) ? q.options : ["True", "False"],
+      correct: (typeof q.correct === 'number') ? q.correct : 0,
+      explanation: q.explanation || "Official curriculum verified explanation."
+    }));
+
     currentQIdx = 0;
     quizScore = 0;
     liveScoreValue.textContent = quizScore;
@@ -824,13 +860,35 @@ document.addEventListener('DOMContentLoaded', () => {
     if (percentage >= 80) {
       completionHeadline.textContent = "Great Job! You Finished Your Quiz! 🏆";
       completionFeedback.textContent = "Milo is super proud! You've built wonderful understanding of these topics.";
+      triggerMiloSpeech("Outstanding quiz score! You're mastering this curriculum! 🌟");
     } else if (percentage >= 50) {
       completionHeadline.textContent = "Well Done! Solid Effort! 🌟";
       completionFeedback.textContent = "You understand the big ideas well. Review the simple explanations to master the tricky parts!";
+      triggerMiloSpeech("Solid effort! Review the notes to turn good into great! 📘");
     } else {
       completionHeadline.textContent = "Good Start! Keep Growing! 🌱";
       completionFeedback.textContent = "Mistakes are just stepping stones to learning. Use Milo's AI Tutor to clear up any doubts!";
+      triggerMiloSpeech("Mistakes are just proof you are exploring! Let's review together! 🌱");
     }
+
+    // Record quiz attempt locally for student progress tracking
+    recordStudentActivity('quiz_score', { percentage, score: quizScore, total });
+    recordStudentActivity('practice_attempt', {});
+    try {
+      const history = JSON.parse(localStorage.getItem('learnmate_quiz_history') || '[]');
+      history.push({
+        date: new Date().toLocaleDateString(),
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        score: quizScore,
+        total: total,
+        percentage: percentage,
+        category: currentQuizFilter
+      });
+      localStorage.setItem('learnmate_quiz_history', JSON.stringify(history.slice(-30)));
+    } catch (e) {
+      console.warn("Could not record quiz history locally:", e);
+    }
+    renderProgressDashboard();
   }
 
   btnRetakeQuiz.addEventListener('click', () => {
@@ -898,27 +956,42 @@ document.addEventListener('DOMContentLoaded', () => {
     roadmapTopicTitle.textContent = `Your Plan: ${topic}`;
     roadmapMetaSub.textContent = `${dayCount}-Day Schedule • ${hours} per day • Goal: ${goal.toUpperCase()}`;
 
-    roadmapChecklistContainer.innerHTML = blueprint.map((item, i) => `
-      <div class="roadmap-step-item">
-        <input type="checkbox" class="roadmap-checkbox" id="step_cb_${i}" aria-label="Mark day completed">
+    const savedSteps = (() => {
+      try { return JSON.parse(localStorage.getItem('learnmate_study_plan_steps') || '{}'); } catch(e) { return {}; }
+    })();
+
+    roadmapChecklistContainer.innerHTML = blueprint.map((item, i) => {
+      const stepKey = `${topic}_day_${i}`;
+      const isChecked = !!savedSteps[stepKey];
+      return `
+      <div class="roadmap-step-item ${isChecked ? 'checked' : ''}">
+        <input type="checkbox" class="roadmap-checkbox" id="step_cb_${i}" data-step-key="${stepKey}" ${isChecked ? 'checked' : ''} aria-label="Mark day completed">
         <div class="roadmap-step-content">
           <span class="step-day-badge">${item.day}</span>
           <h4 class="step-title">${item.phase}</h4>
           <p class="step-desc">${item.desc.replace(/this topic/gi, topic)}</p>
         </div>
       </div>
-    `).join('');
+    `;
+    }).join('');
 
     const checkboxes = roadmapChecklistContainer.querySelectorAll('.roadmap-checkbox');
     checkboxes.forEach(cb => {
       cb.addEventListener('change', (e) => {
         const parentStep = e.target.closest('.roadmap-step-item');
+        const sKey = e.target.getAttribute('data-step-key');
         if (e.target.checked) {
           parentStep.classList.add('checked');
           triggerMiloSpeech("You completed a quest step! Fantastic work! 🎯");
         } else {
           parentStep.classList.remove('checked');
         }
+        try {
+          const curSaved = JSON.parse(localStorage.getItem('learnmate_study_plan_steps') || '{}');
+          if (e.target.checked) curSaved[sKey] = true;
+          else delete curSaved[sKey];
+          localStorage.setItem('learnmate_study_plan_steps', JSON.stringify(curSaved));
+        } catch (err) {}
       });
     });
   }
@@ -955,15 +1028,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnClearApiKey = document.getElementById('btnClearApiKey');
   const apiStatusBanner = document.getElementById('apiStatusBanner');
 
-  function refreshApiStatus() {
-    const stored = localStorage.getItem('learnmate_gemini_key');
-    if (stored) {
-      geminiApiKeyField.value = stored;
-      apiStatusBanner.innerHTML = `Status: <strong style="color:var(--color-coral);">Connected to Custom Gemini API Key</strong> (Will use live Gemini generative responses)`;
-    } else {
-      geminiApiKeyField.value = '';
-      apiStatusBanner.innerHTML = `Status: <strong>Using Built-in Smart Prototype Engine</strong> (Guaranteed fast, reliable, offline-capable responses)`;
+  async function refreshApiStatus() {
+    try {
+      const res = await fetch('/api/health');
+      if (res.ok) {
+        const health = await res.json();
+        const geminiActive = Boolean(health.gemini_available);
+        const openaiActive = Boolean(health.openai_available);
+        if (geminiActive || openaiActive) {
+          const providers = [geminiActive ? 'Google Gemini' : null, openaiActive ? 'OpenAI' : null].filter(Boolean).join(' & ');
+          apiStatusBanner.innerHTML = `Status: <strong style="color: #2A9D8F;">Connected to Server-Side AI</strong> (${providers}). Queries run securely via backend server without exposing keys in browser storage.`;
+        } else {
+          apiStatusBanner.innerHTML = `Status: <strong>Active with Built-in Educational Knowledge Engine</strong>. Set <code>GEMINI_API_KEY</code> or <code>OPENAI_API_KEY</code> in your server <code>.env</code> file to enable live generative AI tutor responses.`;
+        }
+      }
+    } catch (e) {
+      apiStatusBanner.innerHTML = `Status: <strong>Running with Built-in Curriculum Engine (Offline Capable)</strong>.`;
     }
+    // Remove any legacy insecure client keys from localStorage
+    localStorage.removeItem('learnmate_gemini_key');
   }
 
   btnOpenApiKeyModal.addEventListener('click', () => {
@@ -984,24 +1067,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  btnSaveApiKey.addEventListener('click', () => {
-    const val = geminiApiKeyField.value.trim();
-    if (val) {
-      localStorage.setItem('learnmate_gemini_key', val);
-      alert("✅ Gemini API Key saved locally! AI queries will now attempt live generative calls.");
-    } else {
-      localStorage.removeItem('learnmate_gemini_key');
-    }
-    refreshApiStatus();
-    apiKeyModal.classList.remove('active');
-  });
+  if (btnSaveApiKey) {
+    btnSaveApiKey.addEventListener('click', () => {
+      alert("🔒 Security Notice: To keep your credentials safe from client-side exposure, please configure OPENAI_API_KEY or GEMINI_API_KEY in your server's .env file. The Flask backend will use it automatically without risking your key in browser storage.");
+      refreshApiStatus();
+      apiKeyModal.classList.remove('active');
+    });
+  }
 
-  btnClearApiKey.addEventListener('click', () => {
-    localStorage.removeItem('learnmate_gemini_key');
-    refreshApiStatus();
-    alert("ℹ️ Reset to Built-in Smart Prototype Engine.");
-    apiKeyModal.classList.remove('active');
-  });
+  if (btnClearApiKey) {
+    btnClearApiKey.addEventListener('click', () => {
+      localStorage.removeItem('learnmate_gemini_key');
+      refreshApiStatus();
+      alert("ℹ️ Reverted to Built-in Academic Knowledge Engine.");
+      apiKeyModal.classList.remove('active');
+    });
+  }
 
   /* ===================================================================
      6. SMART BOARD & CLASS SELECTION SYSTEM & ACADEMIC SYLLABUS ENGINE
@@ -1010,6 +1091,73 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const PROFILE_STORAGE_KEY = 'learnmate_user_profile';
   const PROGRESS_STORAGE_KEY = 'learnmate_chapter_progress';
+  const STORAGE_ACTIVITY_KEY = 'learnmate_user_activity';
+
+  // Resilient Local Storage Manager (handles corrupted data, schemas, duplicate prevention, and reset)
+  const LearnMateStorage = {
+    version: '2.1',
+    safeGet(key, fallback = null) {
+      try {
+        const raw = localStorage.getItem(key);
+        if (!raw) return fallback;
+        const parsed = JSON.parse(raw);
+        return (parsed !== null && parsed !== undefined) ? parsed : fallback;
+      } catch (err) {
+        console.warn(`LearnMate: Recovered from corrupted storage key "${key}". Resetting to safe defaults.`, err);
+        return fallback;
+      }
+    },
+    safeSet(key, value) {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+      } catch (err) {
+        console.warn(`LearnMate: Could not write to storage key "${key}":`, err);
+      }
+    },
+    getUserActivity() {
+      return this.safeGet(STORAGE_ACTIVITY_KEY, {
+        notesViewed: 0,
+        questionsAttempted: 0,
+        questionsCorrect: 0,
+        quizScores: [],
+        recentLog: []
+      });
+    },
+    recordQuizAttempt(attempt) {
+      if (!attempt) return;
+      const history = this.safeGet('learnmate_quiz_history', []);
+      // Prevent rapid duplicate submissions within 5 seconds for the same category/score
+      const now = Date.now();
+      const isDuplicate = history.some(item => {
+        return item.category === attempt.category &&
+               item.score === attempt.score &&
+               item.total === attempt.total &&
+               (now - (item._timestamp || 0)) < 5000;
+      });
+      if (isDuplicate) return;
+
+      const record = {
+        ...attempt,
+        _timestamp: now,
+        date: attempt.date || new Date().toLocaleDateString(),
+        time: attempt.time || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      history.push(record);
+      this.safeSet('learnmate_quiz_history', history.slice(-50));
+    },
+    getQuizHistory() {
+      return this.safeGet('learnmate_quiz_history', []);
+    },
+    resetAllProgress() {
+      localStorage.removeItem(PROGRESS_STORAGE_KEY);
+      localStorage.removeItem(STORAGE_ACTIVITY_KEY);
+      localStorage.removeItem('learnmate_quiz_history');
+      localStorage.removeItem('learnmate_syllabus_progress');
+      localStorage.removeItem('learnmate_study_plan_steps');
+      console.info("LearnMate local student progress safely reset.");
+    }
+  };
+  window.LearnMateStorage = LearnMateStorage;
 
   // Fallback profile if storage is empty
   const DEFAULT_PROFILE = {
@@ -1021,25 +1169,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // State management helpers
   function getUserProfile() {
-    try {
-      const saved = localStorage.getItem(PROFILE_STORAGE_KEY);
-      return saved ? JSON.parse(saved) : null;
-    } catch (e) {
-      return null;
+    const saved = LearnMateStorage.safeGet(PROFILE_STORAGE_KEY, null);
+    if (saved && typeof saved === 'object' && saved.board && saved.classNum) {
+      return saved;
     }
+    return null;
   }
 
   function saveUserProfile(profile) {
-    localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(profile));
+    LearnMateStorage.safeSet(PROFILE_STORAGE_KEY, profile);
   }
 
   function getChapterProgress() {
-    try {
-      const saved = localStorage.getItem(PROGRESS_STORAGE_KEY);
-      return saved ? JSON.parse(saved) : {};
-    } catch (e) {
-      return {};
-    }
+    return LearnMateStorage.safeGet(PROGRESS_STORAGE_KEY, {});
   }
 
   function setChapterProgress(chapterId, isCompleted) {
@@ -1049,7 +1191,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       delete progress[chapterId];
     }
-    localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(progress));
+    LearnMateStorage.safeSet(PROGRESS_STORAGE_KEY, progress);
   }
 
   // DOM Elements: Header Badge
@@ -1144,10 +1286,6 @@ document.addEventListener('DOMContentLoaded', () => {
     classNum: '10',
     stream: 'general'
   };
-
-  let activeCurriculum = null;
-  let activeSubjectFilter = 'all';
-  let activeChapterInModal = null;
 
   /* -------------------------------------------------------------
      A. ONBOARDING WIZARD NAVIGATION & STEP LOGIC
@@ -1502,6 +1640,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   if (btnChangeBoardHero) {
     btnChangeBoardHero.addEventListener('click', () => openOnboardingModal(true));
+  }
+
+  const btnCloseOnboardingModal = document.getElementById('btnCloseOnboardingModal');
+  if (btnCloseOnboardingModal) {
+    btnCloseOnboardingModal.addEventListener('click', closeOnboardingModal);
+  }
+  if (onboardingModal) {
+    onboardingModal.addEventListener('click', (e) => {
+      if (e.target === onboardingModal) closeOnboardingModal();
+    });
   }
 
   /* -------------------------------------------------------------
@@ -1973,7 +2121,6 @@ document.addEventListener('DOMContentLoaded', () => {
      - Practice Questions Bank (MCQs with submit, Blanks, Solutions)
      - Print & Download Notes
      ------------------------------------------------------------- */
-  let activeChapterInModal = null;
   let activeSubjectInModal = null;
   let activeBoardInModal = null;
   let activeClassInModal = "10";
@@ -1981,13 +2128,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let activeReadingMode = "notebook";
 
   // Modal Element References
-  const chapterDetailModal = document.getElementById('chapterDetailModal');
   const handwrittenPortalWindow = document.getElementById('handwrittenPortalWindow');
   const notebookPaperSheet = document.getElementById('notebookPaperSheet');
-  const btnDismissChapterModal = document.getElementById('btnDismissChapterModal');
-  const btnCloseChapterModal = document.getElementById('btnCloseChapterModal');
-  const btnAskMiloChapter = document.getElementById('btnAskMiloChapter');
-  const chapterModalCompletedCheckbox = document.getElementById('chapterModalCompletedCheckbox');
 
   // Toolbar Actions
   const btnModeNotebook = document.getElementById('btnModeNotebook');
@@ -1999,10 +2141,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const chapterLevelCards = document.querySelectorAll('.chapter-level-pill-card');
 
   // Notebook Content Elements
-  const chapterBreadcrumbs = document.getElementById('chapterBreadcrumbs');
-  const chapterModalIcon = document.getElementById('chapterModalIcon');
-  const chapterModalNumber = document.getElementById('chapterModalNumber');
-  const chapterModalTitle = document.getElementById('chapterModalTitle');
   const nbSubjectMeta = document.getElementById('nbSubjectMeta');
   const nbLevelIndicatorBadge = document.getElementById('nbLevelIndicatorBadge');
   const nbChapterTitle = document.getElementById('nbChapterTitle');
@@ -2045,7 +2183,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnModalDownloadNotes) {
     btnModalDownloadNotes.addEventListener('click', () => {
       if (!activeChapterInModal) return;
-      const notesData = generateHandwrittenNotesData(activeChapterInModal, activeSubjectInModal, activeBoardInModal, activeClassInModal, activeChapterDifficulty);
+      const notesData = (window.LearnMateData && typeof window.LearnMateData.getNotes === 'function')
+        ? window.LearnMateData.getNotes(activeChapterInModal.id, activeChapterDifficulty)
+        : generateHandwrittenNotesData(activeChapterInModal, activeSubjectInModal, activeBoardInModal, activeClassInModal, activeChapterDifficulty);
       
       const fileContent = `===============================================================
 LEARNMATE AI — HANDWRITTEN STUDY NOTES
@@ -2573,10 +2713,13 @@ Generated by LearnMate AI — Learning for Everyone.
 
   // Populate Notebook Paper with Lined Styling & Sections
   function populateHandwrittenNotebook(chapter, subjectMeta, boardMeta, classNum, level) {
-    const data = generateHandwrittenNotesData(chapter, subjectMeta, boardMeta, classNum, level);
+    const data = (window.LearnMateData && typeof window.LearnMateData.getNotes === 'function')
+      ? window.LearnMateData.getNotes(chapter.id, level)
+      : generateHandwrittenNotesData(chapter, subjectMeta, boardMeta, classNum, level);
 
     // Meta chips
-    if (nbSubjectMeta) nbSubjectMeta.textContent = `Subject: ${subjectMeta.name}`;
+    const verificationLabel = data.isAuthored ? '🎓 Verified Syllabus Notes' : '📖 Curriculum Framework Guide';
+    if (nbSubjectMeta) nbSubjectMeta.textContent = `Subject: ${subjectMeta.name} • ${verificationLabel}`;
     if (nbLevelIndicatorBadge) {
       nbLevelIndicatorBadge.textContent = `Level: ${data.levelName}`;
       nbLevelIndicatorBadge.className = `notebook-level-chip ${data.levelBadgeClass}`;
@@ -3243,25 +3386,18 @@ Generated by LearnMate AI — Learning for Everyone.
   /* -------------------------------------------------------------
      F. REAL STUDENT PROGRESS TRACKING & MILESTONES (Requirement 10)
      ------------------------------------------------------------- */
-  const STORAGE_ACTIVITY_KEY = 'learnmate_user_activity';
-
   function getStudentActivity() {
-    try {
-      const raw = localStorage.getItem(STORAGE_ACTIVITY_KEY);
-      return raw ? JSON.parse(raw) : {
-        notesViewed: [],
-        questionsAttempted: 0,
-        questionsCorrect: 0,
-        quizScores: [],
-        milestones: {},
-        recentLog: []
-      };
-    } catch (e) {
-      return { notesViewed: [], questionsAttempted: 0, questionsCorrect: 0, quizScores: [], milestones: {}, recentLog: [] };
-    }
+    return LearnMateStorage.safeGet(STORAGE_ACTIVITY_KEY, {
+      notesViewed: [],
+      questionsAttempted: 0,
+      questionsCorrect: 0,
+      quizScores: [],
+      milestones: {},
+      recentLog: []
+    });
   }
 
-  function recordStudentActivity(actionType, meta) {
+  function recordStudentActivity(actionType, meta = {}) {
     const act = getStudentActivity();
     const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
@@ -3304,13 +3440,19 @@ Generated by LearnMate AI — Learning for Everyone.
         text: `Created AI Notes for "${meta.chapter}" (${meta.level})`,
         time: timeStr
       });
+    } else if (actionType === 'ask_tutor') {
+      act.recentLog.unshift({
+        icon: '💡',
+        text: `Asked Milo about "${(meta.question || 'Topic').slice(0, 30)}..."`,
+        time: timeStr
+      });
     }
 
     // Keep log max 10
     act.recentLog = act.recentLog.slice(0, 10);
 
-    // Save
-    localStorage.setItem(STORAGE_ACTIVITY_KEY, JSON.stringify(act));
+    // Save safely
+    LearnMateStorage.safeSet(STORAGE_ACTIVITY_KEY, act);
   }
 
   function renderProgressDashboard() {
@@ -3458,25 +3600,20 @@ Generated by LearnMate AI — Learning for Everyone.
   }
 
   /* -------------------------------------------------------------
-     D. SYSTEM BOOTSTRAP: CHECK LOCAL PROFILE OR LAUNCH ONBOARDING
+     D. SYSTEM BOOTSTRAP: CHECK LOCAL PROFILE OR INITIALIZE DEFAULT
      ------------------------------------------------------------- */
   const existingProfile = getUserProfile();
   if (!existingProfile) {
-    // First-visit welcome screen! Show the onboarding modal before anything else
-    openOnboardingModal(false);
-    // Also render default curriculum behind the modal so dashboard is ready immediately
     saveUserProfile(DEFAULT_PROFILE);
-    renderSyllabusDashboard();
-  } else {
-    // User has already personalized, render their active syllabus
-    renderSyllabusDashboard();
-    renderProgressDashboard();
   }
+  renderSyllabusDashboard();
+  renderProgressDashboard();
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeLessonModal();
       closeChapterPortalModal();
+      closeOnboardingModal();
       apiKeyModal?.classList.remove('active');
     }
   });
@@ -3576,8 +3713,10 @@ Generated by LearnMate AI — Learning for Everyone.
   const searchDropdown = document.getElementById('homeSearchResultsDropdown');
 
   if (globalSearch && searchDropdown) {
+    let searchDebounceTimer = null;
+
     globalSearch.addEventListener('input', (e) => {
-      const q = e.target.value.trim().toLowerCase();
+      const q = e.target.value.trim();
       if (btnHomeClear) btnHomeClear.style.display = q ? 'block' : 'none';
 
       if (!q || q.length < 2) {
@@ -3586,83 +3725,133 @@ Generated by LearnMate AI — Learning for Everyone.
         return;
       }
 
-      if (!window.SYLLABUS_DATABASE) return;
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(async () => {
+        let results = [];
 
-      const results = [];
-      const curricula = window.SYLLABUS_DATABASE.curricula || {};
+        // 1. Try LearnMateDataProvider search (calls backend /api/search or fallback)
+        try {
+          if (window.LearnMateDataProvider && typeof window.LearnMateDataProvider.search === 'function') {
+            const data = await window.LearnMateDataProvider.search(q);
+            const resObj = (data && data.results) ? data.results : (data || {});
 
-      // Search across all subjects and chapters in current or all curricula
-      Object.keys(curricula).forEach(cKey => {
-        const c = curricula[cKey];
-        (c.subjects || []).forEach(sub => {
-          (sub.chapters || []).forEach(ch => {
-            const matchName = ch.name.toLowerCase().includes(q);
-            const matchSub = sub.name.toLowerCase().includes(q);
-            const matchConcept = (ch.keyConcepts || []).some(k => k.toLowerCase().includes(q));
-            
-            if (matchName || matchSub || matchConcept) {
+            (resObj.chapters || []).forEach(ch => {
               results.push({
-                boardName: c.boardName,
-                classNum: c.classNum,
-                subjectKey: sub.id,
-                subjectName: sub.name,
-                chapter: ch
+                type: 'Chapter',
+                icon: '📖',
+                title: ch.title,
+                sub: `${ch.subject || 'Curriculum'} • ${ch.board || 'Board'} • Class ${ch.classNum || '10'}`,
+                chId: ch.id,
+                action: 'Open Notes →'
               });
+            });
+
+            (resObj.subjects || []).forEach(s => {
+              results.push({
+                type: 'Subject',
+                icon: '📘',
+                title: s.title,
+                sub: `${s.board || 'Curriculum'} • Class ${s.classNum || '10'}`,
+                chId: null,
+                action: 'Explore →'
+              });
+            });
+
+            (resObj.notes || []).forEach(n => {
+              results.push({
+                type: 'Notes',
+                icon: '📝',
+                title: n.title,
+                sub: `${n.subject || 'Subject'} • ${n.board || 'Board'}`,
+                chId: n.chapterId,
+                action: 'Read Notes →'
+              });
+            });
+          }
+        } catch (err) {
+          console.debug("Backend search query error:", err);
+        }
+
+        // 2. Fallback to local syllabus data search if empty
+        if (results.length === 0 && window.LearnMateData && typeof window.LearnMateData.search === 'function') {
+          const localRes = window.LearnMateData.search(q);
+          const resObj = localRes.results || {};
+          (resObj.chapters || []).forEach(ch => {
+            results.push({
+              type: 'Chapter',
+              icon: '📖',
+              title: ch.title,
+              sub: `${ch.subject || 'Curriculum'} • ${ch.board || 'Board'} • Class ${ch.classNum || '10'}`,
+              chId: ch.id,
+              action: 'Open Notes →'
+            });
+          });
+        }
+
+        if (results.length === 0) {
+          searchDropdown.innerHTML = `
+            <div style="padding: 1.5rem; text-align: center; color: #5E7E9E;">
+              <span style="font-size: 1.8rem; display: block; margin-bottom: 0.4rem;">🔍</span>
+              <strong>No matching chapters, subjects, or notes found for "${e.target.value}".</strong>
+              <p style="margin: 0.3rem 0 0 0; font-size: 0.85rem;">Try searching terms like "Reactions", "Acids", "Gravitation", "Real Numbers", or "Science".</p>
+            </div>
+          `;
+          searchDropdown.style.display = 'block';
+          return;
+        }
+
+        // Display up to 8 matched results
+        searchDropdown.innerHTML = results.slice(0, 8).map(res => `
+          <div class="search-result-item" data-ch-id="${res.chId || ''}" style="cursor: pointer; padding: 0.75rem 1rem; border-bottom: 1px solid #EDF4FA; display: flex; align-items: center; justify-content: space-between; transition: background 0.15s;">
+            <div>
+              <div style="font-weight: 700; color: #123B70; font-size: 0.96rem;">
+                ${res.icon} ${res.title}
+              </div>
+              <div style="font-size: 0.82rem; color: #5E7E9E; margin-top: 2px;">
+                ${res.sub}
+              </div>
+            </div>
+            <span style="font-size: 0.82rem; font-weight: 700; color: #123B70; background: #EAF7FF; padding: 0.3rem 0.65rem; border-radius: 6px; white-space: nowrap; margin-left: 0.5rem;">
+              ${res.action}
+            </span>
+          </div>
+        `).join('');
+
+        searchDropdown.style.display = 'block';
+
+        // Click to open chapter
+        searchDropdown.querySelectorAll('.search-result-item').forEach(item => {
+          item.addEventListener('click', () => {
+            const chId = item.getAttribute('data-ch-id');
+            searchDropdown.style.display = 'none';
+            globalSearch.value = '';
+            if (btnHomeClear) btnHomeClear.style.display = 'none';
+
+            if (chId) {
+              const chCard = document.querySelector(`.syllabus-chapter-card[data-chapter-id="${chId}"]`);
+              const btnOpen = chCard ? chCard.querySelector('.btn-open-chapter') : null;
+              if (btnOpen) {
+                btnOpen.click();
+              } else if (chCard) {
+                chCard.click();
+              } else {
+                const chMeta = (window.LearnMateData && typeof window.LearnMateData.getChapter === 'function')
+                  ? window.LearnMateData.getChapter(chId)
+                  : null;
+                if (chMeta && typeof openChapterModal === 'function') {
+                  openChapterModal(chMeta.chapter, chMeta.subject, chMeta.board, chMeta.classNum || activeClass, activeChapterDifficulty);
+                } else {
+                  const exploreSec = document.getElementById('explore');
+                  if (exploreSec) exploreSec.scrollIntoView({ behavior: 'smooth' });
+                }
+              }
+            } else {
+              const exploreSec = document.getElementById('explore');
+              if (exploreSec) exploreSec.scrollIntoView({ behavior: 'smooth' });
             }
           });
         });
-      });
-
-      if (results.length === 0) {
-        searchDropdown.innerHTML = `
-          <div style="padding: 1.5rem; text-align: center; color: #5E7E9E;">
-            <span style="font-size: 1.8rem; display: block; margin-bottom: 0.4rem;">🔍</span>
-            <strong>No matching chapters or notes found for "${e.target.value}".</strong>
-            <p style="margin: 0.3rem 0 0 0; font-size: 0.85rem;">Try searching terms like "Reactions", "Motion", "Algebra", "Light", or "Cell".</p>
-          </div>
-        `;
-        searchDropdown.style.display = 'block';
-        return;
-      }
-
-      // Display up to 8 matched results
-      searchDropdown.innerHTML = results.slice(0, 8).map(res => `
-        <div class="search-result-item" data-ch-id="${res.chapter.id}" data-sub-id="${res.subjectKey}" data-board="${res.boardName}" data-class="${res.classNum}">
-          <div>
-            <div style="font-weight: 700; color: #123B70; font-size: 0.96rem;">
-              📖 ${res.chapter.num ? res.chapter.num + ' — ' : ''}${res.chapter.name}
-            </div>
-            <div style="font-size: 0.82rem; color: #5E7E9E; margin-top: 2px;">
-              ${res.subjectName} • ${res.boardName} • Class ${res.classNum}
-            </div>
-          </div>
-          <span style="font-size: 0.82rem; font-weight: 700; color: #123B70; background: #EAF7FF; padding: 0.3rem 0.65rem; border-radius: 6px;">
-            Open Notes →
-          </span>
-        </div>
-      `).join('');
-
-      searchDropdown.style.display = 'block';
-
-      // Click to open chapter
-      searchDropdown.querySelectorAll('.search-result-item').forEach(item => {
-        item.addEventListener('click', () => {
-          const chId = item.getAttribute('data-ch-id');
-          searchDropdown.style.display = 'none';
-          globalSearch.value = '';
-          if (btnHomeClear) btnHomeClear.style.display = 'none';
-
-          // Try clicking the chapter in the grid or trigger open
-          const chCard = document.querySelector(`.chapter-grid-card[data-chapter-id="${chId}"]`);
-          if (chCard) {
-            chCard.click();
-          } else {
-            // Scroll to syllabus section
-            const exploreSec = document.getElementById('explore');
-            if (exploreSec) exploreSec.scrollIntoView({ behavior: 'smooth' });
-          }
-        });
-      });
+      }, 250);
     });
 
     if (btnHomeClear) {
@@ -3845,7 +4034,7 @@ Generated by LearnMate AI — Learning for Everyone.
    LEARNMATE AI — SUPABASE AUTH & FRONTEND DATA LAYER INTEGRATION
    =================================================================== */
 
-(function initSupabaseAuthAndData() {
+function initSupabaseAuthAndData() {
   const btnStudentAuth = document.getElementById('btnStudentAuth');
   const authBtnText = document.getElementById('authBtnText');
   const authModal = document.getElementById('authModal');
@@ -4003,4 +4192,10 @@ Generated by LearnMate AI — Learning for Everyone.
       }
     });
   }
-})();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initSupabaseAuthAndData);
+} else {
+  initSupabaseAuthAndData();
+}

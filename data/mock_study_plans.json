@@ -1,0 +1,114 @@
+[
+  {
+    "id": "cbse-10-sprint",
+    "title": "CBSE Class 10 Board Exam Mastery (30-Day Sprint)",
+    "board": "cbse",
+    "classNum": "10",
+    "target_exam": "CBSE All India Secondary School Examination (AISSE)",
+    "preparation_level": "Comprehensive",
+    "description": "Structured daily milestones focusing on core Science and Mathematics high-weightage chapters with active recall and practice quizzes.",
+    "tasks": [
+      {
+        "id": "task-1",
+        "day": 1,
+        "title": "Master Chemical Reactions & Balancing Equations",
+        "subject": "Science",
+        "chapterId": "cbse_10_sci_1",
+        "duration_minutes": 45,
+        "activity_type": "Notes & Worked Examples",
+        "completed": true
+      },
+      {
+        "id": "task-2",
+        "day": 2,
+        "title": "Chemical Reactions Quiz Arena Practice (10 MCQs)",
+        "subject": "Science",
+        "chapterId": "cbse_10_sci_1",
+        "duration_minutes": 30,
+        "activity_type": "Quiz & Review",
+        "completed": true
+      },
+      {
+        "id": "task-3",
+        "day": 3,
+        "title": "Acids, Bases & Salts: pH Scale and Salt Preparations",
+        "subject": "Science",
+        "chapterId": "cbse_10_sci_2",
+        "duration_minutes": 50,
+        "activity_type": "Concept Exploration",
+        "completed": false
+      },
+      {
+        "id": "task-4",
+        "day": 4,
+        "title": "Real Numbers & Fundamental Theorem of Arithmetic",
+        "subject": "Mathematics",
+        "chapterId": "cbse_10_math_1",
+        "duration_minutes": 45,
+        "activity_type": "Theorem Proofs & Problems",
+        "completed": false
+      },
+      {
+        "id": "task-5",
+        "day": 5,
+        "title": "Metals & Non-Metals: Reactivity Series & Extraction",
+        "subject": "Science",
+        "chapterId": "cbse_10_sci_3",
+        "duration_minutes": 45,
+        "activity_type": "Flowchart Revision",
+        "completed": false
+      },
+      {
+        "id": "task-6",
+        "day": 6,
+        "title": "Weekly Active Recall & Doubt Clearing with Milo Tutor",
+        "subject": "Cross-Disciplinary",
+        "chapterId": "cbse_10_sci_1",
+        "duration_minutes": 40,
+        "activity_type": "AI Tutor Revision",
+        "completed": false
+      }
+    ]
+  },
+  {
+    "id": "mah-10-booster",
+    "title": "Maharashtra SSC Class 10 Science & Math Booster",
+    "board": "maharashtra",
+    "classNum": "10",
+    "target_exam": "Maharashtra SSC Board Examination",
+    "preparation_level": "Moderate to High",
+    "description": "Targeted preparation for Maharashtra State Board Science Part 1 and Mathematics Part 1 with Balbharati textbook alignment.",
+    "tasks": [
+      {
+        "id": "mah-task-1",
+        "day": 1,
+        "title": "Gravitation: Kepler's Laws & Escape Velocity",
+        "subject": "Science & Technology Part 1",
+        "chapterId": "mah_10_sci_1",
+        "duration_minutes": 45,
+        "activity_type": "Derivation & Concepts",
+        "completed": true
+      },
+      {
+        "id": "mah-task-2",
+        "day": 2,
+        "title": "Gravitation Quiz Practice & Numerical Problems",
+        "subject": "Science & Technology Part 1",
+        "chapterId": "mah_10_sci_1",
+        "duration_minutes": 35,
+        "activity_type": "Quiz Arena",
+        "completed": false
+      },
+      {
+        "id": "mah-task-3",
+        "day": 3,
+        "title": "Periodic Classification of Elements (Dobereiner to Mendeleev)",
+        "subject": "Science & Technology Part 1",
+        "chapterId": "mah_10_sci_2",
+        "duration_minutes": 50,
+        "activity_type": "Comparative Tables",
+        "completed": false
+      }
+    ]
+  }
+]

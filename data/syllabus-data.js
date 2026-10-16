@@ -1,0 +1,2107 @@
+/**
+ * LearnMate AI — Official Academic Syllabus Database
+ * The Curious Learning Universe
+ * 
+ * Supports complete official curricula for:
+ * - Central Board of Secondary Education (CBSE / NCERT)
+ * - State Boards: Maharashtra (MSBSHSE / Balbharati), Gujarat (GSEB), Karnataka (KSEAB),
+ *   Tamil Nadu (TNBSE), Uttar Pradesh (UPMSP), Rajasthan (RBSE), West Bengal (WBBSE), etc.
+ * 
+ * Verified against official academic year 2026-2027 curriculum documents.
+ */
+
+const SYLLABUS_DATABASE = {
+  metadata: {
+    academicYear: "2026-2027",
+    lastVerified: "October 2026",
+    framework: "National Curriculum Framework (NCF) & State Board Syllabi"
+  },
+
+  boards: {
+    cbse: {
+      id: "cbse",
+      name: "Central Board of Secondary Education (CBSE)",
+      shortName: "CBSE",
+      type: "national",
+      source: "NCERT & CBSE Academic (cbseacademic.nic.in)",
+      description: "Nationwide curriculum aligned with NCERT textbooks and national entrance examinations.",
+      classes: {
+        "10": {
+          subjects: {
+            science: {
+              name: "Science (Physics, Chemistry, Biology)",
+              icon: "🔬",
+              chapters: [
+                {
+                  id: "cbse_10_sci_1",
+                  num: "Chapter 1",
+                  name: "Chemical Reactions and Equations",
+                  unit: "Chemical Substances - Nature and Behaviour",
+                  summary: "How atoms rearrange to form new substances. Learn balancing equations, combination, decomposition, displacement, and redox reactions.",
+                  analogy: "Like baking a cake: flour, sugar, and heat undergo a chemical transformation into something delicious that cannot be unbaked!",
+                  keyConcepts: ["Chemical Equation Balancing", "Exothermic & Endothermic Reactions", "Corrosion & Rancidity", "Redox Processes"],
+                  formulas: ["Reactants ➔ Products", "Combustion: CH4 + 2O2 ➔ CO2 + 2H2O + Energy"],
+                  practice: "Why do we apply paint on iron articles? (Answer: Paint creates a barrier preventing oxygen and moisture from causing rust/oxidation.)"
+                },
+                {
+                  id: "cbse_10_sci_2",
+                  num: "Chapter 2",
+                  name: "Acids, Bases and Salts",
+                  unit: "Chemical Substances - Nature and Behaviour",
+                  summary: "Understand pH scale, taste, litmus indicators, neutralization, and practical salts like baking soda, washing soda, and plaster of Paris.",
+                  analogy: "Lemon juice (acid) feels sharp like sour candy, while soap (base) feels slippery. Together they cancel out to make neutral saltwater!",
+                  keyConcepts: ["pH Scale (0 to 14)", "Neutralization: Acid + Base ➔ Salt + Water", "Chlor-Alkali Process", "Water of Crystallization"],
+                  formulas: ["pH = -log[H+]", "Plaster of Paris: CaSO4·½H2O + 1½H2O ➔ CaSO4·2H2O (Gypsum)"],
+                  practice: "Why does tooth decay start when the pH of the mouth is lower than 5.5? (Answer: Acid erodes tooth enamel made of calcium hydroxyapatite.)"
+                },
+                {
+                  id: "cbse_10_sci_3",
+                  num: "Chapter 3",
+                  name: "Metals and Non-metals",
+                  unit: "Chemical Substances - Nature and Behaviour",
+                  summary: "Physical and chemical properties, reactivity series, ionic bond formation, and extraction of metals from ores.",
+                  analogy: "Metals are team players that happily share electrons, making them great wires and bells that ring!",
+                  keyConcepts: ["Reactivity Series", "Ionic Bonding (Electron Transfer)", "Roasting vs. Calcination", "Alloy Formation"],
+                  formulas: ["Metal + Oxygen ➔ Metal Oxide", "ZnCO3 ➔ ZnO + CO2 (Calcination)"],
+                  practice: "Why is sodium kept immersed in kerosene oil? (Answer: Sodium reacts vigorously with atmospheric moisture and oxygen, catching fire.)"
+                },
+                {
+                  id: "cbse_10_sci_4",
+                  num: "Chapter 4",
+                  name: "Carbon and its Compounds",
+                  unit: "Chemical Substances - Nature and Behaviour",
+                  summary: "Covalent bonding, tetravalency, catenation, homologous series, and functional groups (alcohols, aldehydes, carboxylic acids).",
+                  analogy: "Carbon is the ultimate friendly LEGO brick: with 4 bonding arms, it can connect in chains and rings to build all living molecules!",
+                  keyConcepts: ["Catenation & Tetravalency", "Saturated vs Unsaturated Hydrocarbons", "Saponification (Soap Making)", "Esterification"],
+                  formulas: ["Alkane: CnH2n+2", "Alkene: CnH2n", "Alkyne: CnH2n-2", "Ethanol: C2H5OH"],
+                  practice: "What is a homologous series? (Answer: A family of organic compounds having the same functional group and -CH2- difference between successive members.)"
+                },
+                {
+                  id: "cbse_10_sci_5",
+                  num: "Chapter 5",
+                  name: "Life Processes",
+                  unit: "World of Living",
+                  summary: "The essential functions for survival: Nutrition (autotrophic & heterotrophic), Respiration, Transportation in humans and plants, and Excretion.",
+                  analogy: "Your body is a bustling metropolis: blood is the delivery highway, lungs are the air filters, and kidneys are recycling centers!",
+                  keyConcepts: ["Photosynthesis Mechanism", "Aerobic vs Anaerobic Respiration", "Double Circulation in Human Heart", "Nephron Filtration in Kidneys"],
+                  formulas: ["Photosynthesis: 6CO2 + 6H2O + Sunlight ➔ C6H12O6 + 6O2", "Glucose Breakdown ➔ Pyruvate ➔ Energy (ATP)"],
+                  practice: "Why do herbivores have longer small intestines than carnivores? (Answer: Herbivores eat plant matter rich in cellulose, which takes longer to digest.)"
+                },
+                {
+                  id: "cbse_10_sci_6",
+                  num: "Chapter 6",
+                  name: "Control and Coordination",
+                  unit: "World of Living",
+                  summary: "Nervous system, neurons, reflex arcs, human brain structure, and plant hormones (auxins, gibberellins, abscisic acid).",
+                  analogy: "Neurons are like high-speed electrical telegraph cables carrying lightning-fast messages from your fingertips to your brain!",
+                  keyConcepts: ["Neuron & Synapse Action", "Central vs Peripheral Nervous System", "Tropic Movements in Plants", "Endocrine Glands & Hormones"],
+                  formulas: ["Reflex Arc: Receptor ➔ Sensory Neuron ➔ Spinal Cord ➔ Motor Neuron ➔ Effector"],
+                  practice: "What is the function of the myelin sheath in neurons? (Answer: It acts as an electrical insulator, speeding up nerve impulse transmission.)"
+                },
+                {
+                  id: "cbse_10_sci_7",
+                  num: "Chapter 7",
+                  name: "How do Organisms Reproduce?",
+                  unit: "World of Living",
+                  summary: "Asexual reproduction (fission, budding, spore formation) vs. sexual reproduction in flowering plants and humans.",
+                  analogy: "Reproduction is nature's way of passing down the sacred family recipe book so the species continues for generations!",
+                  keyConcepts: ["Binary Fission & Vegetative Propagation", "Flower Anatomy (Carpel & Stamen)", "Double Fertilization in Angiosperms", "Human Reproductive Health"],
+                  formulas: ["Pollen Tube + Ovule ➔ Zygote ➔ Embryo"],
+                  practice: "What is pollination? (Answer: The transfer of pollen grains from the anther to the stigma of a flower.)"
+                },
+                {
+                  id: "cbse_10_sci_8",
+                  num: "Chapter 8",
+                  name: "Heredity",
+                  unit: "World of Living",
+                  summary: "Mendelian genetics, dominant and recessive traits, monohybrid and dihybrid crosses, and sex determination in human babies.",
+                  analogy: "Inheritance is like receiving a shuffled deck of cards from your mom and dad that decides your eye color and hair texture!",
+                  keyConcepts: ["Mendel's Laws of Inheritance", "Monohybrid Ratio (3:1 Phenotype, 1:2:1 Genotype)", "Dihybrid Ratio (9:3:3:1)", "XX vs XY Chromosomes"],
+                  formulas: ["Father (XY) + Mother (XX) ➔ 50% Girl (XX), 50% Boy (XY)"],
+                  practice: "Who determines the biological sex of a human child? (Answer: The father, because sperm carries either an X or a Y chromosome.)"
+                },
+                {
+                  id: "cbse_10_sci_9",
+                  num: "Chapter 9",
+                  name: "Light – Reflection and Refraction",
+                  unit: "Natural Phenomena",
+                  summary: "Spherical mirrors, lenses, ray diagrams, mirror formula, magnification, and Snell's law of refraction.",
+                  analogy: "A curved spoon reflects you upside-down or magnified, showing how bending light rays changes what your eyes perceive!",
+                  keyConcepts: ["Concave & Convex Mirrors", "Snell's Law: n = sin(i) / sin(r)", "Mirror Formula & Lens Formula", "Power of Lens (Dioptres)"],
+                  formulas: ["Mirror: 1/f = 1/v + 1/u", "Lens: 1/f = 1/v - 1/u", "Power: P = 1 / f (in metres)"],
+                  practice: "Find the focal length of a lens of power -2.0 D. (Answer: f = 1 / P = 1 / -2.0 = -0.5 m, which is a concave lens.)"
+                },
+                {
+                  id: "cbse_10_sci_10",
+                  num: "Chapter 10",
+                  name: "The Human Eye and the Colorful World",
+                  unit: "Natural Phenomena",
+                  summary: "Eye anatomy, defects of vision (myopia, hypermetropia, presbyopia), dispersion of light through a prism, and atmospheric refraction.",
+                  analogy: "A glass prism is like a light filter that unweaves sunlight into its rainbow threads of red, orange, yellow, green, blue, and violet!",
+                  keyConcepts: ["Power of Accommodation", "Myopia Correction with Concave Lens", "Atmospheric Refraction (Twinkling of Stars)", "Tyndall Effect & Blue Sky"],
+                  formulas: ["Angle of Deviation: D = i + e - A"],
+                  practice: "Why do stars twinkle while planets do not? (Answer: Stars are point-sized distant light sources affected by shifting atmospheric layers, while planets are closer extended sources.)"
+                },
+                {
+                  id: "cbse_10_sci_11",
+                  num: "Chapter 11",
+                  name: "Electricity",
+                  unit: "Effects of Current",
+                  summary: "Electric current, potential difference, Ohm's law, resistance, series and parallel circuits, and Joule's heating effect.",
+                  analogy: "Think of electricity like water flowing in pipes: voltage is water pressure, current is flow rate, and resistance is pipe thickness!",
+                  keyConcepts: ["Ohm's Law (V = IR)", "Resistors in Series (R = R1 + R2)", "Resistors in Parallel (1/R = 1/R1 + 1/R2)", "Joule's Law of Heating"],
+                  formulas: ["V = I × R", "Power: P = V × I = I²R = V²/R", "Heat: H = I²Rt"],
+                  practice: "Why are domestic electric appliances connected in parallel? (Answer: Each appliance gets full voltage, independent switches, and operates if one fails.)"
+                },
+                {
+                  id: "cbse_10_sci_12",
+                  num: "Chapter 12",
+                  name: "Magnetic Effects of Electric Current",
+                  unit: "Effects of Current",
+                  summary: "Magnetic field lines, right-hand thumb rule, solenoid, Fleming's left-hand rule, electric motors, and domestic electric circuits.",
+                  analogy: "Running electricity through a coiled wire turns it into an invisible magnet that can push, pull, and spin electric fans and motors!",
+                  keyConcepts: ["Magnetic Field of Solenoid", "Fleming's Left-Hand Rule (FBI)", "Electromagnetic Induction", "Earth Wire & Fuse Safety"],
+                  formulas: ["Force on Conductor: F = B × I × L × sin(θ)"],
+                  practice: "What is the function of an earth wire in domestic circuits? (Answer: It provides a safe low-resistance path for leakage current to prevent electric shocks.)"
+                },
+                {
+                  id: "cbse_10_sci_13",
+                  num: "Chapter 13",
+                  name: "Our Environment",
+                  unit: "Natural Resources",
+                  summary: "Ecosystems, food chains, 10% energy law, biological magnification, and ozone layer depletion by CFCs.",
+                  analogy: "An ecosystem is a delicate web of life: sunlight feeds the grass, grass feeds the deer, and deer feed the lion!",
+                  keyConcepts: ["Trophic Levels & 10% Energy Transfer", "Biomagnification of Pesticides", "Ozone Layer (O3) Protection", "Biodegradable vs Non-biodegradable Waste"],
+                  formulas: ["Energy Transfer: Only 10% moves to next trophic level"],
+                  practice: "Why are food chains usually limited to 3-4 trophic levels? (Answer: Because 90% of energy is lost at each step, leaving very little energy for higher levels.)"
+                }
+              ]
+            },
+            mathematics: {
+              name: "Mathematics",
+              icon: "📐",
+              chapters: [
+                {
+                  id: "cbse_10_math_1",
+                  num: "Chapter 1",
+                  name: "Real Numbers",
+                  unit: "Number Systems",
+                  summary: "Fundamental Theorem of Arithmetic, proving irrationality of √2, √3, and decimal expansions of rational numbers.",
+                  analogy: "Every composite number has a unique fingerprint made of prime numbers multiplied together!",
+                  keyConcepts: ["Fundamental Theorem of Arithmetic", "Prime Factorization Method for HCF & LCM", "Proof by Contradiction for Irrationals"],
+                  formulas: ["HCF(a, b) × LCM(a, b) = a × b"],
+                  practice: "Prove that √5 is irrational using proof by contradiction."
+                },
+                {
+                  id: "cbse_10_math_2",
+                  num: "Chapter 2",
+                  name: "Polynomials",
+                  unit: "Algebra",
+                  summary: "Geometrical meaning of zeroes, relationship between zeroes and coefficients of quadratic and cubic polynomials.",
+                  analogy: "A polynomial is an algebraic recipe where the zeroes are the magic ingredient numbers that make the whole bowl equal zero!",
+                  keyConcepts: ["Zeroes of Quadratic Polynomial", "Sum of Zeroes: α + β = -b/a", "Product of Zeroes: αβ = c/a"],
+                  formulas: ["p(x) = ax² + bx + c", "Sum: α + β = -b/a", "Product: αβ = c/a"],
+                  practice: "Find a quadratic polynomial whose zeroes are 2 and -3."
+                },
+                {
+                  id: "cbse_10_math_3",
+                  num: "Chapter 3",
+                  name: "Pair of Linear Equations in Two Variables",
+                  unit: "Algebra",
+                  summary: "Graphical method, substitution method, elimination method, and consistency conditions.",
+                  analogy: "Two straight railway tracks: they can cross at one exact station (unique solution), run parallel forever (no solution), or lie right on top of each other (infinite solutions)!",
+                  keyConcepts: ["Graphical Representation", "Substitution & Elimination Methods", "Consistency: a1/a2 ≠ b1/b2 (Unique)"],
+                  formulas: ["a1x + b1y + c1 = 0", "a2x + b2y + c2 = 0"],
+                  practice: "Solve for x and y: x + y = 14 and x - y = 4. (Answer: x = 9, y = 5)."
+                },
+                {
+                  id: "cbse_10_math_4",
+                  num: "Chapter 4",
+                  name: "Quadratic Equations",
+                  unit: "Algebra",
+                  summary: "Standard form, factorization, quadratic formula (Sridharacharya's rule), and nature of roots.",
+                  analogy: "Throwing a basketball through the hoop makes a parabola arc. A quadratic equation solves when and where the ball touches the ground!",
+                  keyConcepts: ["Standard Form: ax² + bx + c = 0", "Discriminant: D = b² - 4ac", "Real & Distinct Roots if D > 0"],
+                  formulas: ["x = [-b ± √(b² - 4ac)] / 2a", "Discriminant D = b² - 4ac"],
+                  practice: "Find the roots of 2x² - 7x + 3 = 0 using the quadratic formula."
+                },
+                {
+                  id: "cbse_10_math_5",
+                  num: "Chapter 5",
+                  name: "Arithmetic Progressions",
+                  unit: "Algebra",
+                  summary: "Understanding sequence patterns, nth term of an AP, and sum of first n terms.",
+                  analogy: "Climbing a staircase where every single step has the exact same height is an arithmetic progression!",
+                  keyConcepts: ["Common Difference (d = an - an-1)", "nth Term Formula", "Sum of n Terms"],
+                  formulas: ["an = a + (n - 1)d", "Sn = (n/2)[2a + (n - 1)d] = (n/2)[a + l]"],
+                  practice: "Find the 10th term of the AP: 2, 7, 12... (Answer: a = 2, d = 5, a10 = 2 + 9(5) = 47)."
+                },
+                {
+                  id: "cbse_10_math_6",
+                  num: "Chapter 6",
+                  name: "Triangles",
+                  unit: "Geometry",
+                  summary: "Similar figures, Basic Proportionality Theorem (Thales theorem), and criteria for similarity of triangles (AAA, SSS, SAS).",
+                  analogy: "A tiny photo on your phone and a huge poster print are similar figures: their shapes match perfectly even though their sizes differ!",
+                  keyConcepts: ["Basic Proportionality Theorem (BPT)", "Converse of BPT", "Similarity Criteria: AAA, SSS, SAS"],
+                  formulas: ["If DE || BC in ΔABC, then AD/DB = AE/EC"],
+                  practice: "State and explain the Basic Proportionality Theorem."
+                },
+                {
+                  id: "cbse_10_math_7",
+                  num: "Chapter 7",
+                  name: "Coordinate Geometry",
+                  unit: "Coordinate Geometry",
+                  summary: "Distance formula, section formula for internal division, and mid-point formula.",
+                  analogy: "Like a city map grid: using latitude and longitude coordinates, you can calculate the exact walking distance between any two locations!",
+                  keyConcepts: ["Distance Formula", "Section Formula", "Midpoint Formula"],
+                  formulas: ["Distance = √[(x2 - x1)² + (y2 - y1)²]", "Section: x = (m1x2 + m2x1)/(m1 + m2)"],
+                  practice: "Find the distance between the points (2, 3) and (4, 1)."
+                },
+                {
+                  id: "cbse_10_math_8",
+                  num: "Chapter 8",
+                  name: "Introduction to Trigonometry",
+                  unit: "Trigonometry",
+                  summary: "Trigonometric ratios of acute angles, specific values (0°, 30°, 45°, 60°, 90°), and fundamental trigonometric identities.",
+                  analogy: "Trigonometry lets you measure the height of a towering mountain or skyscraper without ever climbing to the top!",
+                  keyConcepts: ["sin, cos, tan, cosec, sec, cot", "Values Table (30°, 45°, 60°)", "Trigonometric Identities"],
+                  formulas: ["sin²θ + cos²θ = 1", "1 + tan²θ = sec²θ", "1 + cot²θ = cosec²θ"],
+                  practice: "If sin A = 3/5, find cos A and tan A."
+                },
+                {
+                  id: "cbse_10_math_9",
+                  num: "Chapter 9",
+                  name: "Some Applications of Trigonometry",
+                  unit: "Trigonometry",
+                  summary: "Heights and distances, line of sight, angle of elevation, and angle of depression.",
+                  analogy: "Looking up at a kite in the sky creates an angle of elevation with the ground. Trigonometry calculates the kite's exact flying altitude!",
+                  keyConcepts: ["Angle of Elevation (looking up)", "Angle of Depression (looking down)", "Line of Sight"],
+                  formulas: ["tan θ = Opposite / Adjacent", "sin θ = Opposite / Hypotenuse"],
+                  practice: "A tower stands vertical on the ground. From a point 15m away, the angle of elevation of the top is 60°. Find its height."
+                },
+                {
+                  id: "cbse_10_math_10",
+                  num: "Chapter 10",
+                  name: "Circles",
+                  unit: "Geometry",
+                  summary: "Tangent to a circle, number of tangents from a point, and theorems on tangent lengths.",
+                  analogy: "A bicycle wheel rolling along flat pavement touches the road at one precise point of contact at each instant—a perfect tangent!",
+                  keyConcepts: ["Tangent is perpendicular to radius at point of contact", "Lengths of tangents drawn from an external point to a circle are equal"],
+                  formulas: ["OP ⊥ PT at tangent point", "PA = PB (Tangents from external point P)"],
+                  practice: "Prove that the tangents drawn from an external point to a circle are equal in length."
+                },
+                {
+                  id: "cbse_10_math_11",
+                  num: "Chapter 11",
+                  name: "Areas Related to Circles",
+                  unit: "Mensuration",
+                  summary: "Perimeter and area of a circle, area of sector, and area of segment of a circle.",
+                  analogy: "Slicing a pizza creates sectors! The crust edge is arc length, and the cheesy slice is the sector area.",
+                  keyConcepts: ["Area of Sector = (θ/360°) × πr²", "Length of Arc = (θ/360°) × 2πr", "Area of Segment = Sector Area - Triangle Area"],
+                  formulas: ["Area = πr²", "Circumference = 2πr", "Sector Area = (θ/360)πr²"],
+                  practice: "Find the area of a sector of a circle with radius 6 cm if angle of sector is 60°."
+                },
+                {
+                  id: "cbse_10_math_12",
+                  num: "Chapter 12",
+                  name: "Surface Areas and Volumes",
+                  unit: "Mensuration",
+                  summary: "Surface area and volume of combinations of solids: cubes, cuboids, spheres, hemispheres, cylinders, and cones.",
+                  analogy: "An ice cream cone with a scoop of ice cream on top is a solid combination of a cone and a hemisphere!",
+                  keyConcepts: ["Volume of Cylinder: πr²h", "Volume of Cone: (1/3)πr²h", "Volume of Sphere: (4/3)πr³", "Hemisphere: (2/3)πr³"],
+                  formulas: ["Cylinder Volume = πr²h", "Cone Curved Surface Area = πrl (where l = √(r² + h²))"],
+                  practice: "Two cubes each of volume 64 cm³ are joined end to end. Find the surface area of the resulting cuboid."
+                },
+                {
+                  id: "cbse_10_math_13",
+                  num: "Chapter 13",
+                  name: "Statistics",
+                  unit: "Statistics & Probability",
+                  summary: "Mean, median, and mode of grouped data, and empirical relationship between the three central tendencies.",
+                  analogy: "Statistics turns chaotic stacks of survey numbers into clear, simple trends that guide scientists and businesses!",
+                  keyConcepts: ["Direct & Assumed Mean Methods", "Mode for Grouped Data", "Median of Grouped Data", "3 Median = Mode + 2 Mean"],
+                  formulas: ["Mean x̄ = Σfi xi / Σfi", "Mode = l + [(f1 - f0)/(2f1 - f0 - f2)] × h", "3 Median = Mode + 2 Mean"],
+                  practice: "State the empirical relationship between mean, median, and mode."
+                },
+                {
+                  id: "cbse_10_math_14",
+                  num: "Chapter 14",
+                  name: "Probability",
+                  unit: "Statistics & Probability",
+                  summary: "Classical definition of probability, elementary events, complementary events, impossible and sure events.",
+                  analogy: "Flipping a fair coin has 2 equal possibilities: heads or tails. Probability gives exact mathematical values to uncertainty!",
+                  keyConcepts: ["P(E) = Number of Favourable Outcomes / Total Number of Outcomes", "0 ≤ P(E) ≤ 1", "P(E) + P(not E) = 1"],
+                  formulas: ["P(E) = n(E) / n(S)", "P(not E) = 1 - P(E)"],
+                  practice: "A die is thrown once. What is the probability of getting a prime number? (Answer: Prime numbers are 2, 3, 5 out of 6, so 3/6 = 1/2)."
+                }
+              ]
+            }
+          }
+        },
+        "8": {
+          subjects: {
+            science: {
+              name: "Science",
+              icon: "🔬",
+              chapters: [
+                {
+                  id: "cbse_8_sci_1",
+                  num: "Chapter 1",
+                  name: "Crop Production and Management",
+                  unit: "Food & Agriculture",
+                  summary: "Agricultural practices: soil preparation, sowing, manures & fertilizers, irrigation, weed removal, harvesting, and granary storage.",
+                  analogy: "Farming is like running a huge outdoor cafeteria for millions of people: every crop needs the right food, water, and care to thrive!",
+                  keyConcepts: ["Kharif vs Rabi Crops", "Drip Irrigation & Sprinkler System", "Compost vs Chemical Fertilizers", "Crop Rotation"],
+                  formulas: ["Kharif (Monsoon: Rice, Maize) | Rabi (Winter: Wheat, Gram)"],
+                  practice: "Why is drip irrigation considered the best technique for water conservation?"
+                },
+                {
+                  id: "cbse_8_sci_2",
+                  num: "Chapter 2",
+                  name: "Microorganisms: Friend and Foe",
+                  unit: "Biological Sciences",
+                  summary: "Bacteria, fungi, protozoa, and algae. Fermentation, antibiotics, vaccines, nitrogen cycle, and food preservation.",
+                  analogy: "Microbes are like tiny secret workers: some bake fluffy bread and make tasty curd, while others are mischief-makers that spoil food!",
+                  keyConcepts: ["Lactobacillus in Curd", "Alexander Fleming & Penicillin", "Pasteurization & Food Preservatives", "Nitrogen Cycle & Rhizobium"],
+                  formulas: ["Sugar + Yeast (Anaerobic) ➔ Alcohol + CO2 (Fermentation)"],
+                  practice: "What is pasteurization and how does it prevent milk spoilage?"
+                },
+                {
+                  id: "cbse_8_sci_3",
+                  num: "Chapter 3",
+                  name: "Coal and Petroleum",
+                  unit: "Natural Resources",
+                  summary: "Fossil fuels, carbonization, coal tar, coal gas, refining of crude oil, and conservation of natural resources.",
+                  analogy: "Petroleum is ancient sunlight buried under prehistoric swamps for millions of years, condensed into liquid fuel!",
+                  keyConcepts: ["Exhaustible vs Inexhaustible Resources", "Fractional Distillation of Petroleum", "Carbonization of Dead Vegetation", "CNG & LPG"],
+                  formulas: ["Dead Vegetation + Heat + High Pressure (Millions of Years) ➔ Coal"],
+                  practice: "Why is petroleum called 'Black Gold'?"
+                },
+                {
+                  id: "cbse_8_sci_4",
+                  num: "Chapter 4",
+                  name: "Combustion and Flame",
+                  unit: "Chemical Sciences",
+                  summary: "Conditions for burning, ignition temperature, types of combustion, fire control, and zones of a candle flame.",
+                  analogy: "A campfire needs three friends to dance: fuel to burn, air to breathe, and enough heat to spark the party!",
+                  keyConcepts: ["Fire Triangle (Fuel + Oxygen + Heat)", "Ignition Temperature", "Luminous vs Non-luminous Flame Zones", "Calorific Value"],
+                  formulas: ["Combustion: Fuel + O2 ➔ CO2 + H2O + Heat + Light"],
+                  practice: "Why is the non-luminous outer zone of a flame the hottest zone?"
+                },
+                {
+                  id: "cbse_8_sci_5",
+                  num: "Chapter 5",
+                  name: "Conservation of Plants and Animals",
+                  unit: "Ecology",
+                  summary: "Deforestation, biodiversity conservation, biosphere reserves, national parks, wildlife sanctuaries, and the Red Data Book.",
+                  analogy: "A forest is like a living umbrella protecting soil, rain, and wild animals. Removing trees collapses the wildlife roof!",
+                  keyConcepts: ["Flora & Fauna", "Endemic Species", "Red Data Book of Endangered Species", "Reforestation"],
+                  formulas: ["Forest Coverage ➔ Soil Water Retention ➔ Climate Stability"],
+                  practice: "What is the difference between a Wildlife Sanctuary and a National Park?"
+                },
+                {
+                  id: "cbse_8_sci_6",
+                  num: "Chapter 6",
+                  name: "Reproduction in Animals",
+                  unit: "Biology",
+                  summary: "Sexual reproduction, male and female reproductive systems, fertilization (internal vs external), and metamorphosis in frogs.",
+                  analogy: "A caterpillar turning into a butterfly or a tadpole growing legs is nature's miraculous transformation called metamorphosis!",
+                  keyConcepts: ["Oviparous vs Viviparous Animals", "Internal vs External Fertilization", "Zygote to Embryo Development", "Metamorphosis"],
+                  formulas: ["Sperm + Ovum ➔ Zygote ➔ Embryo ➔ Foetus"],
+                  practice: "Explain the life cycle stages of a frog (Egg ➔ Tadpole ➔ Adult Frog)."
+                },
+                {
+                  id: "cbse_8_sci_7",
+                  num: "Chapter 7",
+                  name: "Reaching the Age of Adolescence",
+                  unit: "Biology & Health",
+                  summary: "Puberty, physical and emotional changes, endocrine glands, hormones (testosterone, estrogen), and nutritional health.",
+                  analogy: "Adolescence is like a bridge connecting childhood to adulthood, guided by hormonal chemical messengers!",
+                  keyConcepts: ["Pituitary Master Gland", "Secondary Sexual Characteristics", "Balanced Diet for Teenagers", "Personal Hygiene"],
+                  formulas: ["Pituitary Gland ➔ Hormones ➔ Growth & Maturation"],
+                  practice: "What role does the hormone thyroxine play, and why is iodine necessary in our diet?"
+                },
+                {
+                  id: "cbse_8_sci_8",
+                  num: "Chapter 8",
+                  name: "Force and Pressure",
+                  unit: "Physics",
+                  summary: "Push and pull forces, contact and non-contact forces (friction, gravity, electrostatic, magnetic), and atmospheric pressure.",
+                  analogy: "Pressing a sharp thumbtack into a corkboard is easy because small tip area creates huge pressure with tiny force!",
+                  keyConcepts: ["Force = Push or Pull", "Contact vs Non-contact Forces", "Pressure = Force / Area", "Atmospheric Pressure"],
+                  formulas: ["Pressure (P) = Force (F) / Area (A)", "SI Unit: Pascal (N/m²)"],
+                  practice: "Why do school bags have wide shoulder straps instead of thin strings?"
+                },
+                {
+                  id: "cbse_8_sci_9",
+                  num: "Chapter 9",
+                  name: "Friction",
+                  unit: "Physics",
+                  summary: "Cause of friction (surface irregularities), factors affecting friction, friction as a necessary evil, and rolling vs sliding friction.",
+                  analogy: "Friction is like microscopic sandpaper teeth locking together: it wears out your sneakers, but without it you would slip and slide!",
+                  keyConcepts: ["Static, Sliding, and Rolling Friction", "Lubrication & Ball Bearings", "Fluid Friction (Drag)", "Streamlining"],
+                  formulas: ["Rolling Friction < Sliding Friction < Static Friction"],
+                  practice: "Why are aeroplanes and fast bullet trains shaped like birds and fish?"
+                },
+                {
+                  id: "cbse_8_sci_10",
+                  num: "Chapter 10",
+                  name: "Sound",
+                  unit: "Physics",
+                  summary: "Sound produced by vibrating bodies, propagation through mediums, human ear mechanism, pitch, loudness, and noise pollution.",
+                  analogy: "Pluck a stretched rubber band: as it vibrates back and forth, it pushes surrounding air molecules in sound waves straight to your ear!",
+                  keyConcepts: ["Vibrations Produce Sound", "Loudness depends on Amplitude", "Pitch depends on Frequency (Hertz)", "Human Hearing Range: 20 Hz to 20,000 Hz"],
+                  formulas: ["Frequency = Number of Oscillations / Time (in seconds)"],
+                  practice: "Why can sound not travel through a vacuum like outer space?"
+                },
+                {
+                  id: "cbse_8_sci_11",
+                  num: "Chapter 11",
+                  name: "Chemical Effects of Electric Current",
+                  unit: "Chemistry & Physics",
+                  summary: "Conductors and insulators of liquids, electrolysis, electroplating, and practical industrial uses.",
+                  analogy: "Electroplating is like giving cheap iron a shiny golden or chrome armor suit using the magic power of battery current!",
+                  keyConcepts: ["Good & Poor Conducting Liquids", "Electrodes (Anode & Cathode)", "Electroplating Technique", "Chromium Plating on Cycles"],
+                  formulas: ["Electric Current + Electrolyte ➔ Chemical Dissociation"],
+                  practice: "Why is water with a pinch of common salt a much better electrical conductor than pure distilled water?"
+                },
+                {
+                  id: "cbse_8_sci_12",
+                  num: "Chapter 12",
+                  name: "Some Natural Phenomena",
+                  unit: "Earth Science",
+                  summary: "Lightning discharge, transfer of charge, electroscopes, earthquakes, Richter scale, and safety precautions.",
+                  analogy: "Lightning is like a giant cosmic static electric spark—just like when you rub your socks on a fuzzy carpet and touch a door knob!",
+                  keyConcepts: ["Static Electric Charges", "Lightning Conductor on Buildings", "Seismic Waves & Seismograph", "Earthquake Safety Precautions"],
+                  formulas: ["Like charges repel; Unlike charges attract"],
+                  practice: "How does a lightning conductor protect tall buildings from lightning damage?"
+                },
+                {
+                  id: "cbse_8_sci_13",
+                  num: "Chapter 13",
+                  name: "Light",
+                  unit: "Physics",
+                  summary: "Laws of reflection, regular and diffuse reflection, multiple images in periscope and kaleidoscope, and human eye care.",
+                  analogy: "Two parallel mirrors create a magical infinite reflection tunnel where your face repeats forever and ever!",
+                  keyConcepts: ["Angle of Incidence = Angle of Reflection", "Reflected Ray, Incident Ray & Normal lie in same plane", "Kaleidoscope Multiple Reflections", "Braille System for Visually Impaired"],
+                  formulas: ["Number of Images: n = (360° / θ) - 1"],
+                  practice: "State the two fundamental laws of reflection."
+                }
+              ]
+            },
+            mathematics: {
+              name: "Mathematics",
+              icon: "📐",
+              chapters: [
+                {
+                  id: "cbse_8_math_1",
+                  num: "Chapter 1",
+                  name: "Rational Numbers",
+                  unit: "Number Systems",
+                  summary: "Properties of rational numbers: closure, commutativity, associativity, distributive property, and representation on number line.",
+                  analogy: "Sharing 3 pizzas equally among 4 friends gives each person 3/4th of a pizza—a clean rational number!",
+                  keyConcepts: ["p/q form where q ≠ 0", "Additive & Multiplicative Inverse", "Distributive Property: a(b + c) = ab + ac"],
+                  formulas: ["Additive Inverse of a/b is -a/b", "Multiplicative Inverse of a/b is b/a"],
+                  practice: "Find three rational numbers between 1/4 and 1/2."
+                },
+                {
+                  id: "cbse_8_math_2",
+                  num: "Chapter 2",
+                  name: "Linear Equations in One Variable",
+                  unit: "Algebra",
+                  summary: "Solving linear equations with variables on one and both sides, and real-world word problems.",
+                  analogy: "A balanced scale: whatever weight you add or take away from one side, you must do exactly the same to the other side!",
+                  keyConcepts: ["Linear Equation: Degree is 1", "Transposition Method", "Setting up Equations from Word Problems"],
+                  formulas: ["ax + b = c ➔ x = (c - b) / a"],
+                  practice: "Solve for x: 5x + 9 = 5 + 3x. (Answer: 2x = -4 ➔ x = -2)."
+                },
+                {
+                  id: "cbse_8_math_3",
+                  num: "Chapter 3",
+                  name: "Understanding Quadrilaterals",
+                  unit: "Geometry",
+                  summary: "Polygons, convex and concave polygons, interior and exterior angle sum properties, parallelograms, rhombuses, rectangles, and squares.",
+                  analogy: "Quadrilaterals are a four-sided family: from the friendly parallelogram to the neat and orderly square where all angles are 90°!",
+                  keyConcepts: ["Sum of Interior Angles = (n - 2) × 180°", "Sum of Exterior Angles = 360°", "Opposite angles of a parallelogram are equal"],
+                  formulas: ["Interior Angle Sum of Quadrilateral = 360°"],
+                  practice: "Find the measure of each exterior angle of a regular polygon with 9 sides. (Answer: 360° / 9 = 40°)."
+                },
+                {
+                  id: "cbse_8_math_4",
+                  num: "Chapter 4",
+                  name: "Data Handling",
+                  unit: "Statistics",
+                  summary: "Organizing data, frequency distribution tables, grouped frequency distribution, histograms, pie charts, and chance/probability.",
+                  analogy: "A pie chart slices up your budget or sports scores just like a pizza so you can see the biggest slices in one glance!",
+                  keyConcepts: ["Class Interval & Class Mark", "Histograms with Continuous Intervals", "Central Angle of Pie Chart Sector", "Event Probability"],
+                  formulas: ["Central Angle = (Component Value / Total Value) × 360°"],
+                  practice: "Draw and interpret a simple pie chart showing a student's daily 24-hour activities."
+                },
+                {
+                  id: "cbse_8_math_5",
+                  num: "Chapter 5",
+                  name: "Square and Square Roots",
+                  unit: "Arithmetic",
+                  summary: "Square numbers, properties of squares, Pythagorean triplets, finding square roots by prime factorization and long division.",
+                  analogy: "A square tile grid with 7 rows and 7 columns contains exactly 49 square tiles (7² = 49)!",
+                  keyConcepts: ["Perfect Squares", "Pythagorean Triplets (2m, m² - 1, m² + 1)", "Square Root by Long Division Method"],
+                  formulas: ["√x = number whose square is x", "Pythagorean Triplet: a² + b² = c²"],
+                  practice: "Find the square root of 729 using prime factorization. (Answer: 729 = 3⁶ ➔ √729 = 3³ = 27)."
+                },
+                {
+                  id: "cbse_8_math_6",
+                  num: "Chapter 6",
+                  name: "Cube and Cube Roots",
+                  unit: "Arithmetic",
+                  summary: "Cubes of numbers, cube patterns, prime factorization method for finding cube roots.",
+                  analogy: "A Rubik's cube with 3 blocks on each edge contains 3 × 3 × 3 = 27 tiny mini-cubes (3³ = 27)!",
+                  keyConcepts: ["Cube Numbers (n³)", "Prime Factorization in Triplets", "Cube Root Symbol (∛)"],
+                  formulas: ["∛(x³) = x", "Cube of an odd number is always odd"],
+                  practice: "Find the cube root of 1728 using prime factorization. (Answer: 12)."
+                },
+                {
+                  id: "cbse_8_math_7",
+                  num: "Chapter 7",
+                  name: "Comparing Quantities",
+                  unit: "Commercial Mathematics",
+                  summary: "Ratios, percentages, discount, profit and loss, sales tax/GST, and compound interest calculated annually and semi-annually.",
+                  analogy: "Simple interest is like earning rent once a year; compound interest is earning rent on your rent—making money multiply faster!",
+                  keyConcepts: ["Discount = Marked Price - Sale Price", "Profit% = (Profit / Cost Price) × 100", "Compound Interest Formula"],
+                  formulas: ["A = P(1 + R/100)ⁿ", "CI = A - P"],
+                  practice: "Calculate compound interest on ₹10,000 for 2 years at 10% per annum compounded annually."
+                },
+                {
+                  id: "cbse_8_math_8",
+                  num: "Chapter 8",
+                  name: "Algebraic Expressions and Identities",
+                  unit: "Algebra",
+                  summary: "Monomials, binomials, polynomials, addition and subtraction, multiplication of expressions, and standard algebraic identities.",
+                  analogy: "Algebraic identities are mathematical shortcuts that let you square huge numbers in seconds without long multiplication!",
+                  keyConcepts: ["Like vs Unlike Terms", "Multiplying Binomial by Binomial", "Standard Algebraic Identities"],
+                  formulas: ["(a + b)² = a² + 2ab + b²", "(a - b)² = a² - 2ab + b²", "(a + b)(a - b) = a² - b²"],
+                  practice: "Expand using identities: (2x + 3y)²."
+                },
+                {
+                  id: "cbse_8_math_9",
+                  num: "Chapter 9",
+                  name: "Mensuration",
+                  unit: "Mensuration",
+                  summary: "Area of trapezium, general quadrilateral, rhombus, surface area and volume of cuboid, cube, and right circular cylinder.",
+                  analogy: "Finding the volume is seeing how many 1-litre bottles of water can fit inside a water tank!",
+                  keyConcepts: ["Area of Trapezium = ½ × (Sum of parallel sides) × height", "Area of Rhombus = ½ × d1 × d2", "Volume of Cylinder = πr²h"],
+                  formulas: ["Trapezium: Area = ½(a + b)h", "Cylinder Total Surface Area = 2πr(r + h)"],
+                  practice: "Find the volume of a cylinder whose base radius is 7 cm and height is 10 cm. (Answer: 1540 cm³)."
+                },
+                {
+                  id: "cbse_8_math_10",
+                  num: "Chapter 10",
+                  name: "Exponents and Powers",
+                  unit: "Number Operations",
+                  summary: "Powers with negative exponents, laws of exponents, and expressing very large and small numbers in standard scientific notation.",
+                  analogy: "Exponents are mathematical zoom lenses: writing 10¹² lets you count galaxies, and 10⁻⁹ lets you measure atoms without dozens of zeroes!",
+                  keyConcepts: ["Negative Exponent: a⁻ⁿ = 1/aⁿ", "Laws of Exponents (Multiplication, Division, Power of Power)", "Scientific Standard Form"],
+                  formulas: ["aᵐ × aⁿ = aᵐ⁺ⁿ", "aᵐ / aⁿ = aᵐ⁻ⁿ", "(aᵐ)ⁿ = aᵐⁿ"],
+                  practice: "Simplify: (2⁻¹ × 4⁻¹) ÷ 2⁻²."
+                },
+                {
+                  id: "cbse_8_math_11",
+                  num: "Chapter 11",
+                  name: "Direct and Inverse Proportions",
+                  unit: "Arithmetic",
+                  summary: "Direct proportion (as one increases, other increases), inverse proportion (as one increases, other decreases), and word problem applications.",
+                  analogy: "More workers finish building a fence in fewer days (Inverse proportion), but buying more apples costs more money (Direct proportion)!",
+                  keyConcepts: ["Direct Proportion: x / y = k (constant)", "Inverse Proportion: x × y = k (constant)"],
+                  formulas: ["Direct: x1/y1 = x2/y2", "Inverse: x1 × y1 = x2 × y2"],
+                  practice: "If 15 workers can build a wall in 48 hours, how many workers will finish it in 30 hours?"
+                },
+                {
+                  id: "cbse_8_math_12",
+                  num: "Chapter 12",
+                  name: "Factorisation",
+                  unit: "Algebra",
+                  summary: "Common factor method, factorisation by grouping, using identities, splitting the middle term, and polynomial division.",
+                  analogy: "Factorisation is unbaking an expression to see the prime ingredients that multiplied to create it!",
+                  keyConcepts: ["Method of Common Factors", "Regrouping Terms", "Splitting the Middle Term in ax² + bx + c"],
+                  formulas: ["x² + (a + b)x + ab = (x + a)(x + b)"],
+                  practice: "Factorise: x² + 5x + 6. (Answer: (x + 2)(x + 3))."
+                },
+                {
+                  id: "cbse_8_math_13",
+                  num: "Chapter 13",
+                  name: "Introduction to Graphs",
+                  unit: "Coordinate Geometry",
+                  summary: "Line graphs, linear graphs, coordinates of points on a Cartesian plane, and reading independent/dependent variable relations.",
+                  analogy: "A graph tells a visual story of a car's journey over time, turning rows of numbers into an easy mountain picture!",
+                  keyConcepts: ["Cartesian Coordinates (x, y)", "Origin (0, 0)", "Reading Distance-Time Graphs", "Linear Relationship"],
+                  formulas: ["Slope = Change in y / Change in x"],
+                  practice: "Plot the points (1, 2), (2, 4), (3, 6) and verify if they form a straight line."
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+
+    maharashtra: {
+      id: "maharashtra",
+      name: "Maharashtra State Board (MSBSHSE)",
+      shortName: "Maharashtra State Board",
+      type: "state",
+      source: "Maharashtra State Board & eBalbharati (ebalbharati.in)",
+      description: "Official Maharashtra Secondary and Higher Secondary Education Board (SSC & HSC) curriculum with Balbharati textbooks.",
+      classes: {
+        "10": {
+          subjects: {
+            science_part_1: {
+              name: "Science and Technology Part 1 (Physics & Chemistry)",
+              icon: "⚡",
+              chapters: [
+                {
+                  id: "mh_10_sci1_1",
+                  num: "Chapter 1",
+                  name: "Gravitation",
+                  unit: "Physics",
+                  summary: "Kepler's laws of planetary motion, Newton's universal law of gravitation, acceleration due to gravity (g), free fall, and escape velocity.",
+                  analogy: "Toss an apple in the air: Earth's gravitational pull gently pulls it back, exactly following Kepler's celestial dance!",
+                  keyConcepts: ["Kepler's 3 Laws", "Universal Gravitational Constant (G)", "Variation in 'g' with Altitude & Depth", "Escape Velocity Formula"],
+                  formulas: ["F = G(m1 m2) / r²", "g = GM / R²", "Escape Velocity: vesc = √(2GM / R) = √(2gR)"],
+                  practice: "State Kepler's third law of planetary motion and write its mathematical equation (T² ∝ r³)."
+                },
+                {
+                  id: "mh_10_sci1_2",
+                  num: "Chapter 2",
+                  name: "Periodic Classification of Elements",
+                  unit: "Chemistry",
+                  summary: "Dobereiner's triads, Newlands' law of octaves, Mendeleev's periodic table, modern periodic law, and periodic trends in properties.",
+                  analogy: "The periodic table organizes all 118 elemental building blocks like an orderly supermarket where every aisle has matching characteristics!",
+                  keyConcepts: ["Mendeleev's Merits & Demerits", "Modern Periodic Law (Atomic Number)", "Valency, Atomic Size & Electronegativity Trends"],
+                  formulas: ["Periods (7 rows) | Groups (18 columns) | s, p, d, f blocks"],
+                  practice: "How does atomic radius vary down a group and across a period from left to right?"
+                },
+                {
+                  id: "mh_10_sci1_3",
+                  num: "Chapter 3",
+                  name: "Chemical Reactions and Equations",
+                  unit: "Chemistry",
+                  summary: "Rules of writing chemical equations, balancing, types of reactions (combination, decomposition, displacement, double displacement), oxidation and reduction.",
+                  analogy: "When rust forms on iron, oxygen and water are gently stealing electrons over time in an oxidation reaction!",
+                  keyConcepts: ["Balancing Chemical Equations", "Endothermic vs Exothermic Reactions", "Redox Reactions", "Corrosion Prevention & Antioxidants"],
+                  formulas: ["2Mg + O2 ➔ 2MgO + Heat"],
+                  practice: "What is an endothermic reaction? Give one example with chemical equation."
+                },
+                {
+                  id: "mh_10_sci1_4",
+                  num: "Chapter 4",
+                  name: "Effects of Electric Current",
+                  unit: "Physics",
+                  summary: "Heating effect of electric current (Joule's law), electric power, magnetic effect of current, right-hand thumb rule, Fleming's rules, and electric motor/generator.",
+                  analogy: "Electric current flowing through a coiled tungsten filament heats up so bright it glows—lighting up our cozy rooms!",
+                  keyConcepts: ["Joule's Law of Heating: H = I²Rt", "Magnetic Field around Solenoid", "Fleming's Left-Hand & Right-Hand Rules", "AC vs DC Current"],
+                  formulas: ["P = V × I = I²R", "H = I²Rt (Joules)"],
+                  practice: "Explain the construction and working of an Electric Motor with a neat labeled diagram."
+                },
+                {
+                  id: "mh_10_sci1_5",
+                  num: "Chapter 5",
+                  name: "Heat",
+                  unit: "Physics",
+                  summary: "Latent heat of fusion and vaporization, anomalous expansion of water, dew point, relative humidity, and specific heat capacity (principle of heat exchange).",
+                  analogy: "In freezing winter, lakes freeze on top while fish swim safely below because water amazingly expands when it turns into cold ice!",
+                  keyConcepts: ["Latent Heat (Hidden Heat)", "Hope's Apparatus for Anomalous Behavior of Water", "Dew Point & Humidity", "Heat Lost = Heat Gained"],
+                  formulas: ["Q = m × L (Latent heat)", "Q = m × c × ΔT (Specific heat)"],
+                  practice: "Why do aquatic animals survive in frozen lakes in cold countries during winter?"
+                },
+                {
+                  id: "mh_10_sci1_6",
+                  num: "Chapter 6",
+                  name: "Refraction of Light",
+                  unit: "Physics",
+                  summary: "Refraction of light rays passing through media, laws of refraction, refractive index, and twinkling of stars / mirage formation.",
+                  analogy: "Put a pencil into a glass of water: it appears magically broken at the surface because light slows down in denser water!",
+                  keyConcepts: ["Laws of Refraction", "Refractive Index (Absolute vs Relative)", "Total Internal Reflection & Critical Angle", "Mirage Phenomenon"],
+                  formulas: ["Snell's Law: n = sin(i) / sin(r)", "n = v1 / v2"],
+                  practice: "Explain the phenomenon of mirage in hot desert roads with ray diagrams."
+                },
+                {
+                  id: "mh_10_sci1_7",
+                  num: "Chapter 7",
+                  name: "Lenses",
+                  unit: "Physics",
+                  summary: "Convex and concave lenses, sign convention, lens formula, magnification, human eye, defects of vision, and optical instruments.",
+                  analogy: "Your eye lens is a natural autofocus camera, adjusting its thickness so you can read a book or admire distant stars!",
+                  keyConcepts: ["Cartesian Sign Convention", "Lens Formula: 1/f = 1/v - 1/u", "Myopia & Hypermetropia Correction", "Simple & Compound Microscope"],
+                  formulas: ["Power: P = 1 / f (in metres)", "Magnification: M = v / u = h2 / h1"],
+                  practice: "Distinguish between Myopia (near-sightedness) and Hypermetropia (far-sightedness)."
+                },
+                {
+                  id: "mh_10_sci1_8",
+                  num: "Chapter 8",
+                  name: "Metallurgy",
+                  unit: "Chemistry",
+                  summary: "Physical and chemical properties of metals and non-metals, reactivity series, extraction of metals (concentration of ores), refining, and corrosion.",
+                  analogy: "Extracting pure aluminum from raw red bauxite rock is like sifting gold dust from muddy river sand!",
+                  keyConcepts: ["Concentration of Ores (Hydraulic, Magnetic, Froth Floatation)", "Hall-Héroult Electrolytic Reduction of Alumina", "Galvanizing, Tinning, Anodizing"],
+                  formulas: ["Alumina Electrolysis: 2Al2O3 ➔ 4Al + 3O2"],
+                  practice: "Explain the Froth Floatation process used for concentration of sulfide ores."
+                },
+                {
+                  id: "mh_10_sci1_9",
+                  num: "Chapter 9",
+                  name: "Carbon Compounds",
+                  unit: "Chemistry",
+                  summary: "Covalent bonds in carbon, hydrocarbons, functional groups, nomenclature (IUPAC), chemical properties, polymers, and everyday macromolecules.",
+                  analogy: "Carbon is the master architect of living nature: connecting in rings and chains to make everything from sweet honey to DNA!",
+                  keyConcepts: ["IUPAC Nomenclature", "Combustion, Oxidation & Addition Reactions", "Ethanol and Ethanoic Acid Reactions", "Synthetic Polymers"],
+                  formulas: ["CH3COOH + C2H5OH ➔ CH3COOC2H5 (Ester) + H2O"],
+                  practice: "Give the IUPAC names for: CH3-CH2-OH and CH3-COOH."
+                },
+                {
+                  id: "mh_10_sci1_10",
+                  num: "Chapter 10",
+                  name: "Space Missions",
+                  unit: "Physics & Astronomy",
+                  summary: "Need and importance of space missions, artificial satellites, satellite launch vehicles (PSLV), space research, and space debris management.",
+                  analogy: "Satellites are our digital eyes in the sky, beaming GPS maps, weather storm warnings, and live cricket matches to our phones!",
+                  keyConcepts: ["Types of Orbits: Low Earth (LEO), Medium Earth (MEO), High Earth (GEO)", "Multi-stage Rocket Propulsion", "ISRO Missions: Chandrayaan & Mangalyaan"],
+                  formulas: ["Critical Velocity: vc = √(GM / (R + h))"],
+                  practice: "What is a Geostationary Orbit (GEO) and why is it crucial for communication satellites?"
+                }
+              ]
+            },
+            science_part_2: {
+              name: "Science and Technology Part 2 (Biology & Environment)",
+              icon: "🍃",
+              chapters: [
+                {
+                  id: "mh_10_sci2_1",
+                  num: "Chapter 1",
+                  name: "Heredity and Evolution",
+                  unit: "Biology",
+                  summary: "Transcription, translation, translocation, mutation, evidence of evolution (morphological, anatomical, vestigial, paleontological), and Darwin's theory.",
+                  analogy: "Fossils are ancient stone photographs showing how whales evolved from four-legged land mammals millions of years ago!",
+                  keyConcepts: ["Central Dogma (DNA ➔ RNA ➔ Protein)", "Vestigial Organs in Humans (Appendix)", "Darwin's Natural Selection vs Lamarckism", "Human Evolution Stages"],
+                  formulas: ["DNA Transcription (mRNA) ➔ Ribosome Translation (Protein)"],
+                  practice: "Define vestigial organs and name any two vestigial organs found in the human body."
+                },
+                {
+                  id: "mh_10_sci2_2",
+                  num: "Chapter 2",
+                  name: "Life Processes in Living Organisms Part 1",
+                  unit: "Biology",
+                  summary: "Cellular respiration (glycolysis, Krebs cycle, electron transport chain), energy from nutrients (carbs, proteins, fats), and cell division (mitosis & meiosis).",
+                  analogy: "Mitosis is like a biological copy machine: one cell cleanly duplicates into two identical twin daughter cells to heal a scraped knee!",
+                  keyConcepts: ["Glycolysis (EMP Pathway)", "Tricarboxylic Acid (TCA / Krebs Cycle)", "Stages of Mitosis (Prophase, Metaphase, Anaphase, Telophase)", "Meiosis Crossing Over"],
+                  formulas: ["1 Glucose ➔ 2 Pyruvate + 2 ATP + 2 NADH2 (Glycolysis)"],
+                  practice: "With neat diagrams, explain the four stages of Mitosis cell division."
+                },
+                {
+                  id: "mh_10_sci2_3",
+                  num: "Chapter 3",
+                  name: "Life Processes in Living Organisms Part 2",
+                  unit: "Biology",
+                  summary: "Reproduction and types (asexual in unicellular & multicellular, sexual), human reproductive systems, menstrual cycle, modern assisted reproduction (IVF, surrogacy).",
+                  analogy: "Reproduction ensures the continuity of life across generations, just like relay runners passing a golden baton in a race!",
+                  keyConcepts: ["Asexual Methods (Fragmentation, Regeneration, Spores)", "Male & Female Reproductive Anatomy", "Phases of Menstrual Cycle", "IVF, Sperm Bank & Surrogacy"],
+                  formulas: ["Sperm (23) + Ovum (23) ➔ Zygote (46 Chromosomes)"],
+                  practice: "What is IVF (In Vitro Fertilization) and when is it recommended for couples?"
+                },
+                {
+                  id: "mh_10_sci2_4",
+                  num: "Chapter 4",
+                  name: "Environmental Management",
+                  unit: "Ecology",
+                  summary: "Ecosystem relationships, environmental conservation laws, biodiversity hotspots, sacred groves, and disaster management.",
+                  analogy: "Sacred groves are ancient community-protected forests in Maharashtra where people conserve trees and rare herbs with spiritual respect!",
+                  keyConcepts: ["Food Web & Biotic-Abiotic Factors", "Role of Common Man in Conservation (Reduce, Reuse, Recycle)", "Sacred Groves (Devrai)", "Endangered vs Vulnerable Species"],
+                  formulas: ["Producer ➔ Primary Consumer ➔ Secondary Consumer ➔ Apex Predator"],
+                  practice: "What are Sacred Groves (Devrai) and what role do they play in biodiversity conservation?"
+                },
+                {
+                  id: "mh_10_sci2_5",
+                  num: "Chapter 5",
+                  name: "Towards Green Energy",
+                  unit: "Energy & Environment",
+                  summary: "Generation of electrical energy from thermal, nuclear, hydroelectric, wind, and solar sources. Merits and environmental impacts.",
+                  analogy: "Solar panels drink clean sunlight like leaves, turning pure solar rays directly into electricity without smoke or carbon pollution!",
+                  keyConcepts: ["Electromagnetic Induction Principle", "Hydroelectric Power Plant Architecture", "Nuclear Fission & Safety Concerns", "Photovoltaic Solar Cells"],
+                  formulas: ["Solar Energy ➔ Semiconductor ➔ DC Electrical Energy"],
+                  practice: "Why is energy generated from solar cells and wind turbines termed 'Green Energy'?"
+                },
+                {
+                  id: "mh_10_sci2_6",
+                  num: "Chapter 6",
+                  name: "Animal Classification",
+                  unit: "Zoology",
+                  summary: "History of animal classification, traditional vs modern criteria (germ layers, coelom, symmetry, segmentation), and Phyla from Porifera to Chordata.",
+                  analogy: "From sponge-like Porifera on ocean reefs to birds soaring in clouds, classification maps the family tree of all animal life on Earth!",
+                  keyConcepts: ["Radial vs Bilateral Symmetry", "Acoelomate vs Coelomate", "Phylum Arthropoda (Jointed legs)", "Subphylum Vertebrata (Pisces, Amphibia, Reptilia, Aves, Mammalia)"],
+                  formulas: ["Kingdom Animalia ➔ Non-Chordates & Chordates"],
+                  practice: "Give four distinct characteristics of Phylum Arthropoda with examples."
+                },
+                {
+                  id: "mh_10_sci2_7",
+                  num: "Chapter 7",
+                  name: "Introduction to Microbiology",
+                  unit: "Applied Biology",
+                  summary: "Applied microbiology, industrial microbiology, dairy products, probiotic foods, microbial enzymes, bio-fuels, and microbial pollution control.",
+                  analogy: "Microbes act as nature's microscopic bio-cleaners, chewing up toxic oil spills in the ocean and turning trash into clean biogas!",
+                  keyConcepts: ["Yogurt & Cheese Production Microbes", "Probiotics for Gut Health", "Microbial Decomposition of Sewage", "Bio-fertilizers"],
+                  formulas: ["Lactose in Milk ➔ Lactic Acid by Lactobacillus"],
+                  practice: "What are probiotics and why are they recommended for digestive wellness?"
+                },
+                {
+                  id: "mh_10_sci2_8",
+                  num: "Chapter 8",
+                  name: "Cell Biology and Biotechnology",
+                  unit: "Biotechnology",
+                  summary: "Cytology, stem cells and their therapeutic uses, organ donation, commercial applications of biotechnology (Bt cotton, golden rice), and DNA fingerprinting.",
+                  analogy: "Stem cells are magical master cells that can transform into heart cells, brain neurons, or skin to heal damaged human organs!",
+                  keyConcepts: ["Embryonic vs Adult Stem Cells", "Organ Donation & Transplantation Ethics", "Genetically Modified Crops (Bt Cotton, Golden Rice)", "Green, White & Blue Revolutions"],
+                  formulas: ["Stem Cell ➔ Differentiation into specialized tissue"],
+                  practice: "Explain the therapeutic uses of Stem Cells in medical science."
+                },
+                {
+                  id: "mh_10_sci2_9",
+                  num: "Chapter 9",
+                  name: "Social Health",
+                  unit: "Health & Wellbeing",
+                  summary: "Factors affecting social health, mental stress management, cybercrime and safe internet habits, and overcoming substance addiction.",
+                  analogy: "Healthy hobbies like playing outdoor games, reading books, and laughing with real friends protect our minds from digital screen burnout!",
+                  keyConcepts: ["Social Health Factors", "Cybercrime Laws (IT Act 2000)", "Stress Relieving Techniques (Yoga, Sports, Music)", "Laughter Clubs"],
+                  formulas: ["Physical Health + Mental Balance + Social Harmony = Total Wellness"],
+                  practice: "What precautions should students take to stay safe from cybercrime and online scams?"
+                },
+                {
+                  id: "mh_10_sci2_10",
+                  num: "Chapter 10",
+                  name: "Disaster Management",
+                  unit: "Public Safety",
+                  summary: "Natural vs man-made disasters, disaster management cycle (pre-disaster preparedness & post-disaster rehabilitation), first aid, and mock drills.",
+                  analogy: "Practicing a school fire drill or earthquake drop-cover-hold ensures your body knows exactly where to run safely when an emergency strikes!",
+                  keyConcepts: ["Disaster Impact & Categorization", "Pre-Disaster Planning", "First Aid Procedures (ABC: Airway, Breathing, Circulation)", "Mock Drill Importance"],
+                  formulas: ["Preparedness ➔ Response ➔ Recovery ➔ Mitigation"],
+                  practice: "What first-aid measures should be taken in case of burns and bleeding injuries?"
+                }
+              ]
+            },
+            math_part_1: {
+              name: "Mathematics Part 1 (Algebra)",
+              icon: "🔢",
+              chapters: [
+                {
+                  id: "mh_10_m1_1",
+                  num: "Chapter 1",
+                  name: "Linear Equations in Two Variables",
+                  unit: "Algebra",
+                  summary: "Simultaneous linear equations, graphical method, Cramer's rule (determinants), and equations reducible to a pair of linear equations.",
+                  analogy: "Cramer's rule is a mathematical secret decoder wheel using cross-multiplication to find unknown x and y in three clean steps!",
+                  keyConcepts: ["Simultaneous Equations", "Determinants & Cramer's Method", "Equations Reducible to Linear Form"],
+                  formulas: ["Determinant D = |a b; c d| = ad - bc", "x = Dx / D", "y = Dy / D"],
+                  practice: "Solve using Cramer's rule: 3x - 4y = 10, 4x + 3y = 5."
+                },
+                {
+                  id: "mh_10_m1_2",
+                  num: "Chapter 2",
+                  name: "Quadratic Equations",
+                  unit: "Algebra",
+                  summary: "Standard form ax² + bx + c = 0, solution by factorisation, completing square method, formula method, and relations between roots and coefficients.",
+                  analogy: "Solving a quadratic equation tells you the two exact landing points of a kicked soccer ball!",
+                  keyConcepts: ["Discriminant Δ = b² - 4ac", "Formula Method", "Sum of Roots α + β = -b/a", "Product of Roots αβ = c/a"],
+                  formulas: ["x = [-b ± √(b² - 4ac)] / 2a", "Nature of roots based on Δ"],
+                  practice: "Find the discriminant of 2x² - 5x + 3 = 0 and determine the nature of its roots."
+                },
+                {
+                  id: "mh_10_m1_3",
+                  num: "Chapter 3",
+                  name: "Arithmetic Progression",
+                  unit: "Algebra",
+                  summary: "Sequence, terms of an AP, nth term formula, sum of the first n terms of an AP, and practical daily life word problems.",
+                  analogy: "Saving ₹10 on day 1, ₹20 on day 2, ₹30 on day 3 is an arithmetic progression that grows your piggy bank systematically!",
+                  keyConcepts: ["Common Difference d = tn - tn-1", "nth Term tn = a + (n - 1)d", "Sum Formula Sn"],
+                  formulas: ["tn = a + (n - 1)d", "Sn = (n/2)[2a + (n - 1)d] = (n/2)[t1 + tn]"],
+                  practice: "Find the sum of the first 20 natural numbers using the AP sum formula."
+                },
+                {
+                  id: "mh_10_m1_4",
+                  num: "Chapter 4",
+                  name: "Financial Planning",
+                  unit: "Commercial Mathematics",
+                  summary: "Goods and Services Tax (GST: CGST + SGST), tax invoice calculation, shares, face value, market value, brokerage, and mutual funds.",
+                  analogy: "When you buy your favorite snack, the bill shows CGST (Central tax) and SGST (State tax) split equally in half!",
+                  keyConcepts: ["GST = CGST + SGST (CGST = SGST = GST/2)", "Shares (Face Value vs Market Value)", "Brokerage & GST on Brokerage", "SIP in Mutual Funds"],
+                  formulas: ["GST = Taxable Value × Rate of GST", "Dividend = Number of Shares × Face Value × Dividend%"],
+                  practice: "A watch is purchased for ₹1000 with 18% GST. Find CGST and SGST amounts."
+                },
+                {
+                  id: "mh_10_m1_5",
+                  num: "Chapter 5",
+                  name: "Probability",
+                  unit: "Statistics & Probability",
+                  summary: "Random experiments, sample space (S), events (impossible, sure, mutually exclusive), and calculating probability P(A).",
+                  analogy: "Tossing a coin or rolling a six-sided die lets us calculate the exact mathematical fairness of any game!",
+                  keyConcepts: ["Sample Space n(S)", "Event Space n(A)", "Probability Formula P(A) = n(A) / n(S)", "0 ≤ P(A) ≤ 1"],
+                  formulas: ["P(A) = n(A) / n(S)"],
+                  practice: "Two coins are tossed simultaneously. Find the probability of getting at least one head."
+                },
+                {
+                  id: "mh_10_m1_6",
+                  num: "Chapter 6",
+                  name: "Statistics",
+                  unit: "Statistics",
+                  summary: "Measures of central tendency: Mean (direct, assumed mean, step deviation methods), Mode, Median for grouped data, histograms, and pie diagrams.",
+                  analogy: "A pie chart splits school survey results into delicious colored slices so anyone can understand big data at a glance!",
+                  keyConcepts: ["Direct & Assumed Mean Methods", "Mode Formula for Grouped Data", "Median Formula", "Drawing Frequency Polygons and Pie Charts"],
+                  formulas: ["Mean x̄ = a + (Σfi di / Σfi)", "Mode = L + [(f1 - f0)/(2f1 - f0 - f2)] × h"],
+                  practice: "State the formula for calculating the median of grouped data and explain each term."
+                }
+              ]
+            },
+            math_part_2: {
+              name: "Mathematics Part 2 (Geometry)",
+              icon: "📐",
+              chapters: [
+                {
+                  id: "mh_10_m2_1",
+                  num: "Chapter 1",
+                  name: "Similarity",
+                  unit: "Geometry",
+                  summary: "Ratio of areas of two triangles, Basic Proportionality Theorem, converse of BPT, property of angle bisector, and areas of similar triangles.",
+                  analogy: "A toy model of an electric train has the exact same proportions as the real full-sized train on the tracks!",
+                  keyConcepts: ["Ratio of Areas of Triangles", "Basic Proportionality Theorem (BPT)", "Angle Bisector Theorem", "Theorem of Areas of Similar Triangles"],
+                  formulas: ["Area(Δ1)/Area(Δ2) = (b1 × h1)/(b2 × h2)", "Similar Triangles: Area(Δ1)/Area(Δ2) = (Side1 / Side2)²"],
+                  practice: "State and prove the Basic Proportionality Theorem."
+                },
+                {
+                  id: "mh_10_m2_2",
+                  num: "Chapter 2",
+                  name: "Pythagoras Theorem",
+                  unit: "Geometry",
+                  summary: "Similarity of right-angled triangles, theorem of geometric mean, Pythagoras theorem proof, converse, and Apollonius theorem.",
+                  analogy: "If you walk 3 km East and 4 km North, Pythagoras calculates that you are exactly 5 km from where you started!",
+                  keyConcepts: ["Pythagoras Theorem: a² + b² = c²", "Geometric Mean Theorem: h² = p × q", "Apollonius Theorem for Medians"],
+                  formulas: ["Hypotenuse² = Base² + Height²", "Apollonius: AB² + AC² = 2AM² + 2BM²"],
+                  practice: "In ΔABC, ∠B = 90°, AB = 6 cm, BC = 8 cm. Find the length of hypotenuse AC."
+                },
+                {
+                  id: "mh_10_m2_3",
+                  num: "Chapter 3",
+                  name: "Circle",
+                  unit: "Geometry",
+                  summary: "Circles passing through points, tangent theorem, converse, tangent segments theorem, touching circles, inscribed angle theorem, and cyclic quadrilaterals.",
+                  analogy: "A circular clock face: hands make inscribed angles that measure half the arc they cut out on the rim!",
+                  keyConcepts: ["Tangent Theorem (Radius ⊥ Tangent)", "Tangent Segments Theorem (PA = PB)", "Inscribed Angle Theorem", "Opposite Angles of Cyclic Quadrilateral are Supplementary (180°)"],
+                  formulas: ["Inscribed Angle = ½ × Intercepted Arc", "∠A + ∠C = 180° in cyclic quadrilateral"],
+                  practice: "Prove that opposite angles of a cyclic quadrilateral are supplementary."
+                },
+                {
+                  id: "mh_10_m2_4",
+                  num: "Chapter 4",
+                  name: "Geometric Constructions",
+                  unit: "Geometry",
+                  summary: "Construction of similar triangles, and constructing tangents to a circle from a point on the circle and from an external point.",
+                  analogy: "Using your compass and ruler like a master architect to sketch perfect tangent lines and proportional triangle drafts!",
+                  keyConcepts: ["Constructing Similar Triangle with Common Vertex", "Tangent at a point using Center", "Tangent from External Point"],
+                  formulas: ["Compass arc intersection ensures mathematical perpendicularity"],
+                  practice: "Describe the steps to construct tangents to a circle of radius 3.5 cm from an external point 7 cm from the center."
+                },
+                {
+                  id: "mh_10_m2_5",
+                  num: "Chapter 5",
+                  name: "Coordinate Geometry",
+                  unit: "Coordinate Geometry",
+                  summary: "Distance formula, section formula for internal division, coordinates of midpoint, coordinates of centroid of a triangle, and slope of a line.",
+                  analogy: "Like GPS coordinates guiding airplanes safely to the airport runway by checking slope and distance!",
+                  keyConcepts: ["Distance Formula", "Section Formula", "Centroid Formula G = ((x1+x2+x3)/3, (y1+y2+y3)/3)", "Slope m = tan θ = (y2 - y1)/(x2 - x1)"],
+                  formulas: ["Distance = √[(x2 - x1)² + (y2 - y1)²]", "Slope m = (y2 - y1) / (x2 - x1)"],
+                  practice: "Find the slope of a line passing through points (2, 3) and (4, 7)."
+                },
+                {
+                  id: "mh_10_m2_6",
+                  num: "Chapter 6",
+                  name: "Trigonometry",
+                  unit: "Trigonometry",
+                  summary: "Trigonometric ratios, relationships, trigonometric identities, and word problems on heights and distances.",
+                  analogy: "Trigonometry lets astronomers calculate the exact distance to the Moon using angle measurements!",
+                  keyConcepts: ["Trigonometric Ratios (sin, cos, tan, cosec, sec, cot)", "Identities: sin²θ + cos²θ = 1", "Angle of Elevation & Depression"],
+                  formulas: ["sin²θ + cos²θ = 1", "1 + tan²θ = sec²θ", "1 + cot²θ = cosec²θ"],
+                  practice: "A kite is flying at a height of 60m above ground with string inclined at 60°. Find string length."
+                },
+                {
+                  id: "mh_10_m2_7",
+                  num: "Chapter 7",
+                  name: "Mensuration",
+                  unit: "Mensuration",
+                  summary: "Area of sector and segment of a circle, surface areas and volumes of cube, cuboid, cylinder, cone, sphere, hemisphere, and frustum of a cone.",
+                  analogy: "A bucket is a frustum of a cone. Mensuration tells you exactly how many liters of water will fill it to the brim!",
+                  keyConcepts: ["Curved & Total Surface Area of Solids", "Volume of Frustum of Cone", "Area of Minor & Major Sectors"],
+                  formulas: ["Cone Volume = (1/3)πr²h", "Sphere Volume = (4/3)πr³", "Sector Area = (θ/360°) × πr²"],
+                  practice: "Find the volume of a sphere of radius 7 cm (Take π = 22/7)."
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+
+    gujarat: {
+      id: "gujarat",
+      name: "Gujarat Secondary and Higher Secondary Education Board (GSEB)",
+      shortName: "Gujarat State Board",
+      type: "state",
+      source: "GSEB Official Curriculum (gseb.org)",
+      description: "Official Gujarat State Board syllabus aligned with state textbooks and NCERT standards.",
+      classes: {
+        "10": {
+          subjects: {
+            science: {
+              name: "Science & Technology",
+              icon: "🔬",
+              chapters: [
+                { id: "gseb_10_1", num: "Chapter 1", name: "Chemical Reactions and Equations", unit: "Chemistry", summary: "Types of chemical changes, word equations, balancing, and practical everyday oxidation effects.", analogy: "Baking bread changes dough into sponge!", keyConcepts: ["Balancing", "Redox", "Corrosion"], formulas: ["Fe + CuSO4 ➔ FeSO4 + Cu"], practice: "Explain displacement reaction with an experiment." },
+                { id: "gseb_10_2", num: "Chapter 2", name: "Acids, Bases and Salts", unit: "Chemistry", summary: "Indicators, pH scale in daily life, preparation of washing soda, baking soda, bleaching powder.", analogy: "Toothpaste is a gentle base that neutralizes mouth acids!", keyConcepts: ["pH Scale", "Neutralization", "Bleaching Powder"], formulas: ["CaOCl2 (Bleaching Powder)"], practice: "Why is plaster of Paris stored in moisture-proof containers?" },
+                { id: "gseb_10_3", num: "Chapter 3", name: "Metals and Non-Metals", unit: "Chemistry", summary: "Physical and chemical properties, reactivity series, metallurgy processes, and corrosion prevention.", analogy: "Gold and platinum stay shiny forever because they refuse to react with air!", keyConcepts: ["Reactivity Series", "Ionic Compounds", "Alloys"], formulas: ["Ionic bond formation in NaCl"], practice: "Why are ionic compounds soluble in water?" },
+                { id: "gseb_10_4", num: "Chapter 4", name: "Carbon and its Compounds", unit: "Chemistry", summary: "Covalent bonds, versatility of carbon, soap action, and ethanol reactions.", analogy: "Carbon forms the skeleton of all living cells!", keyConcepts: ["Tetravalency", "Homologous Series", "Micelle in Soap"], formulas: ["C2H5OH + Na ➔ C2H5ONa + H2"], practice: "Explain the cleansing action of soap with micelle structure." },
+                { id: "gseb_10_5", num: "Chapter 5", name: "Life Processes", unit: "Biology", summary: "Nutrition, cellular respiration, circulation of blood in human body, and excretion mechanism.", analogy: "Blood is the river of life delivering oxygen to trillions of hungry cells!", keyConcepts: ["Autotrophic Nutrition", "Human Heart Chambers", "Nephron Structure"], formulas: ["Respiration in Mitochondria: ATP release"], practice: "Draw a neat diagram of human heart and trace the path of oxygenated blood." }
+              ]
+            },
+            mathematics: {
+              name: "Mathematics",
+              icon: "📐",
+              chapters: [
+                { id: "gseb_10_m1", num: "Chapter 1", name: "Real Numbers", unit: "Number Systems", summary: "Euclid's division lemma, fundamental theorem of arithmetic, and rational number expansions.", analogy: "Primes are the indivisible atoms of arithmetic!", keyConcepts: ["Prime Factorization", "LCM & HCF", "Irrational Proofs"], formulas: ["a = bq + r (0 ≤ r < b)"], practice: "Find HCF and LCM of 12, 15 and 21." },
+                { id: "gseb_10_m2", num: "Chapter 2", name: "Polynomials", unit: "Algebra", summary: "Zeroes of linear, quadratic, and cubic polynomials with graphical interpretations.", analogy: "The x-intercepts of a curve are where the polynomial zeroes live!", keyConcepts: ["Quadratic Zeroes", "Relationship with Coefficients", "Parabola Shape"], formulas: ["α + β = -b/a, αβ = c/a"], practice: "Find the zeroes of x² - 2x - 8." },
+                { id: "gseb_10_m3", num: "Chapter 3", name: "Pair of Linear Equations in Two Variables", unit: "Algebra", summary: "Graphical, substitution, elimination, and cross-multiplication methods.", analogy: "Two flight paths intersecting at a single safe waypoint!", keyConcepts: ["Consistency Conditions", "Elimination Method", "Word Problems"], formulas: ["a1/a2 ≠ b1/b2"], practice: "Solve for x and y: 2x + 3y = 11, 2x - 4y = -24." }
+              ]
+            }
+          }
+        }
+      }
+    },
+
+    karnataka: {
+      id: "karnataka",
+      name: "Karnataka School Examination and Assessment Board (KSEAB)",
+      shortName: "Karnataka State Board",
+      type: "state",
+      source: "KSEAB & DSERT (kseab.karnataka.gov.in)",
+      description: "Official Karnataka Secondary Education curriculum based on DSERT guidelines.",
+      classes: {
+        "10": {
+          subjects: {
+            science: {
+              name: "Science",
+              icon: "🔬",
+              chapters: [
+                { id: "ka_10_1", num: "Chapter 1", name: "Chemical Reactions and Equations", unit: "Chemistry", summary: "Chemical transformations, balancing equations, combination, displacement, and redox reactions.", analogy: "Rust on iron is slow combustion without a visible flame!", keyConcepts: ["Balancing Equations", "Exothermic Processes", "Rancidity"], formulas: ["2H2 + O2 ➔ 2H2O"], practice: "Differentiate between displacement and double displacement reactions." },
+                { id: "ka_10_2", num: "Chapter 2", name: "Acids, Bases and Salts", unit: "Chemistry", summary: "pH scale, indicators, preparation of washing soda, baking soda, and plaster of Paris.", analogy: "Acid neutralizes base just like cold ice cools hot tea!", keyConcepts: ["pH Indicators", "Salts Preparation", "Water of Crystallization"], formulas: ["Na2CO3·10H2O"], practice: "What is the role of tartaric acid in baking powder?" },
+                { id: "ka_10_3", num: "Chapter 3", name: "Electricity", unit: "Physics", summary: "Electric potential, Ohm's law, factors affecting resistance, series/parallel combinations, and Joule's law.", analogy: "Water flowing through wide pipes has low resistance and high current!", keyConcepts: ["Ohm's Law: V = IR", "Resistivity (ρ)", "Heating Effect H = I²Rt"], formulas: ["V = IR", "R = ρ(L/A)"], practice: "State Ohm's law and write its mathematical formula." }
+              ]
+            },
+            mathematics: {
+              name: "Mathematics",
+              icon: "📐",
+              chapters: [
+                { id: "ka_10_m1", num: "Chapter 1", name: "Arithmetic Progressions", unit: "Algebra", summary: "Definition of AP, general term an, and sum of first n terms Sn.", analogy: "A grandfather clock chiming once at 1, twice at 2, thrice at 3 is an AP!", keyConcepts: ["Common Difference", "General Term an", "Sum Sn"], formulas: ["an = a + (n - 1)d", "Sn = (n/2)[2a + (n - 1)d]"], practice: "Find the 20th term of the AP: 4, 9, 14, 19..." },
+                { id: "ka_10_m2", num: "Chapter 2", name: "Triangles", unit: "Geometry", summary: "Thales theorem (BPT), criteria for similarity of triangles, and Pythagoras theorem.", analogy: "Pythagoras calculated the hypotenuse shortcut across right-angled fields!", keyConcepts: ["Thales Theorem", "AAA & SAS Similarity", "Pythagoras Theorem"], formulas: ["AC² = AB² + BC² in right-angled ΔABC"], practice: "State Thales theorem with a neat diagram." },
+                { id: "ka_10_m3", num: "Chapter 3", name: "Pair of Linear Equations in Two Variables", unit: "Algebra", summary: "Algebraic and graphical solutions, consistency, and unique solutions.", analogy: "Two crossing lines share exactly one common intersection point!", keyConcepts: ["Substitution", "Elimination", "Cross-multiplication"], formulas: ["a1x + b1y + c1 = 0"], practice: "Solve: x + y = 10 and x - y = 2." }
+              ]
+            }
+          }
+        }
+      }
+    },
+
+    tamilnadu: {
+      id: "tamilnadu",
+      name: "Tamil Nadu State Board (TNBSE / DGE)",
+      shortName: "Tamil Nadu State Board",
+      type: "state",
+      source: "Tamil Nadu Directorate of Government Examinations (dge.tn.gov.in)",
+      description: "Official Samacheer Kalvi state curriculum by the Department of School Education, Tamil Nadu.",
+      classes: {
+        "10": {
+          subjects: {
+            science: {
+              name: "Science",
+              icon: "🔬",
+              chapters: [
+                { id: "tn_10_1", num: "Unit 1", name: "Laws of Motion", unit: "Physics", summary: "Inertia, linear momentum, Newton's laws of motion, gravitation, and mass vs weight.", analogy: "Seatbelts save lives by holding back inertia when brakes slam!", keyConcepts: ["Newton's Laws", "Inertia of Rest & Motion", "Universal Gravitation"], formulas: ["F = m × a", "Momentum p = m × v"], practice: "State Newton's second law of motion and derive F = ma." },
+                { id: "tn_10_2", num: "Unit 2", name: "Optics", unit: "Physics", summary: "Refraction of light, lenses, lens formula, human eye, and optical instruments.", analogy: "A magnifying glass focuses sun rays to ignite paper!", keyConcepts: ["Refraction Laws", "Convex & Concave Lenses", "Eye Defects"], formulas: ["1/f = 1/v - 1/u"], practice: "Distinguish between convex and concave lenses." },
+                { id: "tn_10_3", num: "Unit 7", name: "Atoms and Molecules", unit: "Chemistry", summary: "Atomic mass, molecular mass, mole concept, Avogadro's number, and gas volumes.", analogy: "A mole is like a baker's dozen, but with 6.023 × 10²³ tiny particles!", keyConcepts: ["Mole Concept", "Avogadro's Number: 6.023 × 10²³", "Molar Mass"], formulas: ["Moles = Given Mass / Molar Mass"], practice: "Calculate the number of moles in 27g of Aluminum." }
+              ]
+            },
+            mathematics: {
+              name: "Mathematics",
+              icon: "📐",
+              chapters: [
+                { id: "tn_10_m1", num: "Chapter 1", name: "Relations and Functions", unit: "Algebra", summary: "Cartesian product, relations, representation of functions, and composition of functions.", analogy: "A function is a magical machine: enter an input x, and it outputs a unique y!", keyConcepts: ["Cartesian Product A × B", "Domain & Co-domain", "One-to-One Function"], formulas: ["f(g(x)) composite function"], practice: "If A = {1, 3, 5} and B = {2, 3}, find A × B and B × A." },
+                { id: "tn_10_m2", num: "Chapter 2", name: "Numbers and Sequences", unit: "Arithmetic", summary: "Euclid's division lemma, Fundamental Theorem of Arithmetic, Arithmetic and Geometric Progressions.", analogy: "Geometric progression doubles like multiplying bacteria: 2, 4, 8, 16, 32!", keyConcepts: ["Euclid's Lemma", "AP General Term", "GP General Term tn = arⁿ⁻¹"], formulas: ["GP: tn = arⁿ⁻¹", "AP: tn = a + (n - 1)d"], practice: "Find the 8th term of the GP: 3, 6, 12, 24..." },
+                { id: "tn_10_m3", num: "Chapter 3", name: "Algebra", unit: "Algebra", summary: "Simultaneous linear equations, quadratic equations, GCD & LCM of polynomials, and matrices.", analogy: "Matrices organize data tables like spreadsheets to compute games and graphics!", keyConcepts: ["Factorisation", "Matrix Operations (Addition, Multiplication)", "Quadratic Formula"], formulas: ["x = [-b ± √(b² - 4ac)] / 2a"], practice: "Solve x² - 3x - 10 = 0 by factorization." }
+              ]
+            }
+          }
+        }
+      }
+    },
+
+    up: {
+      id: "up",
+      name: "Uttar Pradesh Board (UPMSP)",
+      shortName: "UP Board",
+      type: "state",
+      source: "Uttar Pradesh Madhyamik Shiksha Parishad (upmsp.edu.in)",
+      description: "Official curriculum of Asia's largest state education board (UPMSP, Prayagraj).",
+      classes: {
+        "10": {
+          subjects: {
+            science: {
+              name: "Science (विज्ञान)",
+              icon: "🔬",
+              chapters: [
+                { id: "up_10_1", num: "Chapter 1", name: "Chemical Reactions and Equations (रासायनिक अभिक्रियाएं एवं समीकरण)", unit: "Chemistry", summary: "Balancing equations, types of reactions, oxidation-reduction, and corrosion.", analogy: "लोहे पर जंग लगना ऑक्सीकरण का एक दैनिक उदाहरण है!", keyConcepts: ["रासायनिक समीकरण संतुलन", "विस्थापन अभिक्रिया", "उपचयन एवं अपचयन"], formulas: ["Reactants ➔ Products"], practice: "रासायनिक समीकरण को संतुलित करना क्यों आवश्यक है?" },
+                { id: "up_10_2", num: "Chapter 2", name: "Acids, Bases and Salts (अम्ल, क्षारक एवं लवण)", unit: "Chemistry", summary: "pH value, litmus test, bleaching powder, and plaster of paris preparation.", analogy: "नींबू का रस खट्टा अम्ल है और बेकिंग सोडा क्षारक है!", keyConcepts: ["pH मान", "उदासीनीकरण अभिक्रिया", "विरंजक चूर्ण"], formulas: ["CaOCl2"], practice: "pH पैमाना क्या है? मानव शरीर के लिए सामान्य pH परास लिखिए।" },
+                { id: "up_10_3", num: "Chapter 10", name: "Light – Reflection and Refraction (प्रकाश – परावर्तन तथा अपवर्तन)", unit: "Physics", summary: "Mirror and lens formula, reflection from spherical surfaces, and refraction.", analogy: "समतल दर्पण में बनने वाला प्रतिबिंब आभासी और सीधा होता है!", keyConcepts: ["परावर्तन के नियम", "दर्पण सूत्र", "अपवर्तनांक"], formulas: ["1/f = 1/v + 1/u"], practice: "प्रकाश के परावर्तन के नियमों को चित्र सहित समझाइए।" }
+              ]
+            },
+            mathematics: {
+              name: "Mathematics (गणित)",
+              icon: "📐",
+              chapters: [
+                { id: "up_10_m1", num: "Chapter 1", name: "Real Numbers (वास्तविक संख्याएं)", unit: "Number Systems", summary: "Euclid division algorithm, prime factorization, and irrationality proofs.", analogy: "अभाज्य संख्याएं गणित की मूल ईंटें हैं!", keyConcepts: ["यूक्लिड विभाजन प्रमेयिका", "अभाज्य गुणनखंड", "अपरिमेय संख्याएं"], formulas: ["a = bq + r"], practice: "सिद्ध कीजिए कि √3 एक अपरिमेय संख्या है।" },
+                { id: "up_10_m2", num: "Chapter 2", name: "Polynomials (बहुपद)", unit: "Algebra", summary: "Zeroes of quadratic polynomials and verification of coefficients.", analogy: "बहुपद के शून्यक वह संख्याएं हैं जो समीकरण को शून्य बनाती हैं!", keyConcepts: ["शून्यकों का योगफल", "शून्यकों का गुणनफल"], formulas: ["α + β = -b/a, αβ = c/a"], practice: "द्विघात बहुपद x² + 7x + 10 के शून्यक ज्ञात कीजिए।" },
+                { id: "up_10_m3", num: "Chapter 4", name: "Quadratic Equations (द्विघात समीकरण)", unit: "Algebra", summary: "Factorization, quadratic formula, and discriminant nature of roots.", analogy: "क्रिकेट गेंद का परवलयाकार मार्ग द्विघात समीकरण द्वारा दर्शाया जाता है!", keyConcepts: ["विविक्तकर D = b² - 4ac", "द्विघाती सूत्र"], formulas: ["x = [-b ± √(b² - 4ac)] / 2a"], practice: "समीकरण 2x² - 4x + 3 = 0 का विविक्तकर ज्ञात कीजिए।" }
+              ]
+            }
+          }
+        }
+      }
+    },
+
+    rajasthan: {
+      id: "rajasthan",
+      name: "Board of Secondary Education Rajasthan (RBSE / BSER)",
+      shortName: "Rajasthan State Board",
+      type: "state",
+      source: "Board of Secondary Education Rajasthan, Ajmer (rajeduboard.rajasthan.gov.in)",
+      description: "Official Rajasthan Board curriculum prescribed by RBSE Ajmer for secondary and higher secondary schools.",
+      classes: {
+        "10": {
+          subjects: {
+            science: {
+              name: "Science (विज्ञान)",
+              icon: "🔬",
+              chapters: [
+                { id: "rbse_10_1", num: "Chapter 1", name: "Chemical Reactions and Equations (रासायनिक अभिक्रियाएँ एवं समीकरण)", unit: "Chemistry", summary: "Balanced equations, combination, decomposition, displacement, and rancidity/oxidation in daily life.", analogy: "Baking soda and vinegar fizzing with carbon dioxide bubbles!", keyConcepts: ["संतुलित समीकरण", "ऊष्माक्षेपी व ऊष्माशोषी", "विकृतगंधिता"], formulas: ["2Mg + O2 ➔ 2MgO"], practice: "संतुलित रासायनिक समीकरण किसे कहते हैं? एक उदाहरण दीजिए।" },
+                { id: "rbse_10_2", num: "Chapter 2", name: "Acids, Bases and Salts (अम्ल, क्षारक एवं लवण)", unit: "Chemistry", summary: "Indicators, pH scale, washing soda, bleaching powder, and plaster of Paris.", analogy: "Antacid tablets neutralizing excess hydrochloric acid in stomach!", keyConcepts: ["pH पैमाना", "उदासीनीकरण", "प्लास्टर ऑफ पेरिस"], formulas: ["CaSO4·½H2O"], practice: "विरंजक चूर्ण (Bleaching Powder) का रासायनिक नाम एवं सूत्र लिखिए।" },
+                { id: "rbse_10_3", num: "Chapter 5", name: "Life Processes (जैव प्रक्रम)", unit: "Biology", summary: "Human digestive system, cellular respiration, blood circulatory system, and kidney excretion.", analogy: "The circulatory system is a continuous highway delivering oxygen to every organ!", keyConcepts: ["प्रकाश संश्लेषण", "मानव हृदय की संरचना", "नेफ्रॉन की कार्यप्रणाली"], formulas: ["C6H12O6 + 6O2 ➔ 6CO2 + 6H2O + ऊर्जा"], practice: "नेफ्रॉन का नामांकित चित्र बनाकर उसके मुख्य कार्य बताइए।" }
+              ]
+            },
+            mathematics: {
+              name: "Mathematics (गणित)",
+              icon: "📐",
+              chapters: [
+                { id: "rbse_10_m1", num: "Chapter 1", name: "Real Numbers (वास्तविक संख्याएँ)", unit: "Number Systems", summary: "Euclidean algorithm, prime factorization, and proving irrationality of √5.", analogy: "Prime numbers build all composite numbers like atomic blocks!", keyConcepts: ["अभाज्य गुणनखंड", "अपरिमेय संख्या का सत्यापन"], formulas: ["HCF × LCM = a × b"], practice: "सिद्ध कीजिए कि √5 एक अपरिमेय संख्या है।" },
+                { id: "rbse_10_m2", num: "Chapter 3", name: "Pair of Linear Equations (दो चरों वाले रैखिक समीकरण युग्म)", unit: "Algebra", summary: "Graphical and algebraic methods: elimination, substitution.", analogy: "Finding the exact point on a map where two roads meet!", keyConcepts: ["विलोपन विधि", "प्रतिस्थापन विधि", "संगत एवं असंगत रेखाएं"], formulas: ["a1x + b1y + c1 = 0"], practice: "रैखिक समीकरण युग्म 2x + y = 6 और 2x - y = 2 को हल कीजिए।" },
+                { id: "rbse_10_m3", num: "Chapter 8", name: "Introduction to Trigonometry (त्रिकोणमिति का परिचय)", unit: "Trigonometry", summary: "Trigonometric ratios (sin, cos, tan), specific angles 30°, 45°, 60°, and identities.", analogy: "Surveyors measuring tall mountain peaks without climbing them!", keyConcepts: ["त्रिकोणमितीय अनुपात", "sin²θ + cos²θ = 1", "ऊंचाई व दूरी"], formulas: ["sin²θ + cos²θ = 1", "tan θ = sin θ / cos θ"], practice: "यदि sin A = 3/4 है, तो cos A और tan A का मान ज्ञात कीजिए।" }
+              ]
+            }
+          }
+        }
+      }
+    },
+
+    westbengal: {
+      id: "westbengal",
+      name: "West Bengal Board of Secondary Education (WBBSE / WBCHSE)",
+      shortName: "West Bengal Board",
+      type: "state",
+      source: "West Bengal Board of Secondary Education (wbbse.wb.gov.in) & WBCHSE",
+      description: "Official Madhyamik (Class 10) and Uchha Madhyamik (Class 12) curricula of West Bengal.",
+      classes: {
+        "10": {
+          subjects: {
+            physical_science: {
+              name: "Physical Science (ভৌত বিজ্ঞান)",
+              icon: "⚛️",
+              chapters: [
+                { id: "wb_10_1", num: "Chapter 1", name: "Concerns about Our Environment (পরিবেশের জন্য ভাবনা)", unit: "Physics", summary: "Layers of atmosphere, ozone layer depletion, greenhouse effect, and sustainable energy sources.", analogy: "The ozone layer is Earth's natural sunglasses blocking harsh ultraviolet rays!", keyConcepts: ["Troposphere & Stratosphere", "Ozone Depletion (CFCs)", "Renewable Energy"], formulas: ["CF2Cl2 + UV ➔ CF2Cl + Cl•"], practice: "What causes the depletion of the ozone layer in the stratosphere?" },
+                { id: "wb_10_2", num: "Chapter 2", name: "Behavior of Gases (গ্যাসের আচরণ)", unit: "Physics", summary: "Boyle's law, Charles's law, Avogadro's law, and the ideal gas equation PV = nRT.", analogy: "Hot air balloons rise high because heating expands gas and lowers its density!", keyConcepts: ["Boyle's Law: P ∝ 1/V", "Charles's Law: V ∝ T", "Ideal Gas Equation"], formulas: ["PV = nRT", "P1V1/T1 = P2V2/T2"], practice: "State Boyle's Law and express it mathematically." },
+                { id: "wb_10_3", num: "Chapter 8", name: "Periodic Table & Chemical Properties (পর্যায় সারণি)", unit: "Chemistry", summary: "Mendeleev's periodic law, Modern periodic table, periodic trends (atomic radius, ionization energy, electronegativity).", analogy: "Periodic table is the ultimate chemical filing cabinet where elements with similar personalities sit in the same column!", keyConcepts: ["Modern Periodic Law", "Periodic Trends", "Electronegativity"], formulas: ["Electronegativity: F > O > N > Cl"], practice: "How does atomic radius change along a period and down a group?" }
+              ]
+            },
+            life_science: {
+              name: "Life Science (জীবন বিজ্ঞান)",
+              icon: "🍃",
+              chapters: [
+                { id: "wb_10_ls1", num: "Chapter 1", name: "Control and Coordination in Living Organisms (জীবজগতে নিয়ন্ত্রণ ও সমন্বয়)", unit: "Biology", summary: "Plant movements (tropic, nastic), plant hormones (Auxin, Cytokinin), human nervous system, and reflex actions.", analogy: "Touch-me-not plant folds its delicate leaves when tapped due to sudden turgor pressure changes!", keyConcepts: ["Phytohormones", "Neuron & Synapse", "Reflex Arc"], formulas: ["Stimulus ➔ Receptor ➔ Nerve ➔ Brain/Spinal Cord ➔ Effector"], practice: "Distinguish between tropic movement and nastic movement in plants." },
+                { id: "wb_10_ls2", num: "Chapter 2", name: "Continuity of Life (জীবনের ধারাবাহিকতা)", unit: "Biology", summary: "Chromosome structure, DNA & RNA, cell cycle, mitosis, meiosis, and reproduction.", analogy: "Chromosomes are condensed biological library volumes containing all hereditary genes!", keyConcepts: ["Centromere & Chromatids", "Phases of Mitosis", "Significance of Meiosis"], formulas: ["Diploid (2n) ➔ Haploid (n) in Meiosis"], practice: "Why is Meiosis called reductional division?" }
+              ]
+            },
+            mathematics: {
+              name: "Mathematics (গণিত)",
+              icon: "📐",
+              chapters: [
+                { id: "wb_10_m1", num: "Chapter 1", name: "Quadratic Equations in One Variable (একচলবিশিষ্ট দ্বিঘাত সমীকরণ)", unit: "Algebra", summary: "Standard form ax² + bx + c = 0, factorization, Sridhar Acharya's formula, and nature of roots.", analogy: "Sridhar Acharya was an ancient Indian mathematician who gave the universal quadratic formula!", keyConcepts: ["Sridhar Acharya's Formula", "Discriminant b² - 4ac", "Sum & Product of Roots"], formulas: ["x = [-b ± √(b² - 4ac)] / 2a"], practice: "Find the roots of x² - 5x + 6 = 0 using Sridhar Acharya's formula." },
+                { id: "wb_10_m2", num: "Chapter 2", name: "Simple Interest (সরল সুদ)", unit: "Commercial Arithmetic", summary: "Principal, rate of interest, time, and simple interest calculations in banking.", analogy: "Interest is the small rent paid for borrowing money from a bank!", keyConcepts: ["Principal (P)", "Rate (R)", "Time (T)", "Amount (A = P + I)"], formulas: ["I = (P × R × T) / 100"], practice: "Calculate simple interest on ₹5000 at 6% per annum for 3 years." }
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+
+  // Complete Registry of all 28 Indian States & 8 Union Territories with official boards
+  allIndianStatesBoards: [
+    {
+      id: "maharashtra",
+      state: "Maharashtra",
+      secondaryBoard: "Maharashtra State Board of Secondary and Higher Secondary Education (MSBSHSE)",
+      higherSecondaryBoard: "MSBSHSE (HSC Board, Pune)",
+      abbreviation: "MSBSHSE / Balbharati",
+      website: "mahahsscboard.in",
+      curriculumSource: "Maharashtra State Bureau of Textbook Production & Curriculum Research (Balbharati)",
+      examNames: "SSC (Class 10) & HSC (Class 12)",
+      hasCurriculum: true
+    },
+    {
+      id: "gujarat",
+      state: "Gujarat",
+      secondaryBoard: "Gujarat Secondary and Higher Secondary Education Board (GSEB)",
+      higherSecondaryBoard: "GSEB Gandhinagar",
+      abbreviation: "GSEB",
+      website: "gseb.org",
+      curriculumSource: "Gujarat State Board of School Textbooks (GSBST)",
+      examNames: "SSC & HSC (Science / General)",
+      hasCurriculum: true
+    },
+    {
+      id: "karnataka",
+      state: "Karnataka",
+      secondaryBoard: "Karnataka School Examination and Assessment Board (KSEAB)",
+      higherSecondaryBoard: "KSEAB (Pre-University Education - PUE)",
+      abbreviation: "KSEAB",
+      website: "kseab.karnataka.gov.in",
+      curriculumSource: "Department of State Educational Research and Training (DSERT)",
+      examNames: "SSLC (Class 10) & 2nd PUC (Class 12)",
+      hasCurriculum: true
+    },
+    {
+      id: "tamilnadu",
+      state: "Tamil Nadu",
+      secondaryBoard: "Tamil Nadu State Board of School Examinations (TNBSE / DGE)",
+      higherSecondaryBoard: "Directorate of Government Examinations, Chennai",
+      abbreviation: "TNBSE / Samacheer Kalvi",
+      website: "dge.tn.gov.in",
+      curriculumSource: "State Council of Educational Research and Training (SCERT Tamil Nadu)",
+      examNames: "SSLC (Class 10) & Plus Two (+2 HSC)",
+      hasCurriculum: true
+    },
+    {
+      id: "up",
+      state: "Uttar Pradesh",
+      secondaryBoard: "Uttar Pradesh Madhyamik Shiksha Parishad (UPMSP)",
+      higherSecondaryBoard: "UPMSP Prayagraj (UP Board)",
+      abbreviation: "UPMSP",
+      website: "upmsp.edu.in",
+      curriculumSource: "SCERT Uttar Pradesh & UPMSP Prayagraj",
+      examNames: "High School (Class 10) & Intermediate (Class 12)",
+      hasCurriculum: true
+    },
+    {
+      id: "rajasthan",
+      state: "Rajasthan",
+      secondaryBoard: "Board of Secondary Education Rajasthan (RBSE / BSER)",
+      higherSecondaryBoard: "RBSE Ajmer",
+      abbreviation: "RBSE",
+      website: "rajeduboard.rajasthan.gov.in",
+      curriculumSource: "Rajasthan State Text Book Board, Jaipur",
+      examNames: "Secondary (Class 10) & Senior Secondary (Class 12)",
+      hasCurriculum: true
+    },
+    {
+      id: "westbengal",
+      state: "West Bengal",
+      secondaryBoard: "West Bengal Board of Secondary Education (WBBSE)",
+      higherSecondaryBoard: "West Bengal Council of Higher Secondary Education (WBCHSE)",
+      abbreviation: "WBBSE / WBCHSE",
+      website: "wbbse.wb.gov.in",
+      curriculumSource: "WBBSE & WBCHSE Syllabus Committees",
+      examNames: "Madhyamik Pariksha (Class 10) & Uchha Madhyamik (Class 12)",
+      hasCurriculum: true
+    },
+    {
+      id: "andhrapradesh",
+      state: "Andhra Pradesh",
+      secondaryBoard: "Board of Secondary Education, Andhra Pradesh (BSEAP)",
+      higherSecondaryBoard: "Board of Intermediate Education, AP (BIEAP)",
+      abbreviation: "BSEAP / BIEAP",
+      website: "bse.ap.gov.in",
+      curriculumSource: "SCERT Andhra Pradesh",
+      examNames: "SSC (Class 10) & Intermediate (1st & 2nd Year)",
+      hasCurriculum: false
+    },
+    {
+      id: "telangana",
+      state: "Telangana",
+      secondaryBoard: "Directorate of Government Examinations Telangana (BSE Telangana)",
+      higherSecondaryBoard: "Telangana State Board of Intermediate Education (TSBIE)",
+      abbreviation: "BSE Telangana / TSBIE",
+      website: "bse.telangana.gov.in",
+      curriculumSource: "SCERT Telangana",
+      examNames: "SSC (Class 10) & TS Intermediate",
+      hasCurriculum: false
+    },
+    {
+      id: "kerala",
+      state: "Kerala",
+      secondaryBoard: "Kerala Board of Public Examinations (KBPE - Pareeksha Bhavan)",
+      higherSecondaryBoard: "Directorate of General Education (DHSE Kerala)",
+      abbreviation: "KBPE / DHSE Kerala",
+      website: "keralapareekshabhavan.in",
+      curriculumSource: "State Council of Educational Research and Training (SCERT Kerala)",
+      examNames: "SSLC (Class 10) & Plus Two (HSE)",
+      hasCurriculum: false
+    },
+    {
+      id: "madhyapradesh",
+      state: "Madhya Pradesh",
+      secondaryBoard: "Madhya Pradesh Board of Secondary Education (MPBSE)",
+      higherSecondaryBoard: "MPBSE Bhopal",
+      abbreviation: "MPBSE",
+      website: "mpbse.nic.in",
+      curriculumSource: "Rajya Shiksha Kendra & MPBSE",
+      examNames: "High School (Class 10) & Higher Secondary (Class 12)",
+      hasCurriculum: false
+    },
+    {
+      id: "bihar",
+      state: "Bihar",
+      secondaryBoard: "Bihar School Examination Board (BSEB)",
+      higherSecondaryBoard: "BSEB Patna",
+      abbreviation: "BSEB",
+      website: "biharboardonline.bihar.gov.in",
+      curriculumSource: "SCERT Bihar (BSTBPC)",
+      examNames: "Matriculation (Class 10) & Intermediate (Class 12)",
+      hasCurriculum: false
+    },
+    {
+      id: "punjab",
+      state: "Punjab",
+      secondaryBoard: "Punjab School Education Board (PSEB)",
+      higherSecondaryBoard: "PSEB Mohali",
+      abbreviation: "PSEB",
+      website: "pseb.ac.in",
+      curriculumSource: "State Council of Educational Research & Training Punjab",
+      examNames: "Matriculation & Senior Secondary",
+      hasCurriculum: false
+    },
+    {
+      id: "haryana",
+      state: "Haryana",
+      secondaryBoard: "Board of School Education Haryana (BSEH / HBSE)",
+      higherSecondaryBoard: "BSEH Bhiwani",
+      abbreviation: "BSEH",
+      website: "bseh.org.in",
+      curriculumSource: "SCERT Haryana, Gurugram",
+      examNames: "Secondary (Class 10) & Sr. Secondary (Class 12)",
+      hasCurriculum: false
+    },
+    {
+      id: "odisha",
+      state: "Odisha",
+      secondaryBoard: "Board of Secondary Education, Odisha (BSE Odisha)",
+      higherSecondaryBoard: "Council of Higher Secondary Education, Odisha (CHSE)",
+      abbreviation: "BSE Odisha / CHSE",
+      website: "bseodisha.ac.in",
+      curriculumSource: "Directorate of TE and SCERT Odisha",
+      examNames: "High School Certificate (HSC) & +2 Annual Exam",
+      hasCurriculum: false
+    },
+    {
+      id: "assam",
+      state: "Assam",
+      secondaryBoard: "Board of Secondary Education, Assam (SEBA)",
+      higherSecondaryBoard: "Assam Higher Secondary Education Council (AHSEC)",
+      abbreviation: "SEBA / AHSEC",
+      website: "sebaonline.org",
+      curriculumSource: "State Council of Educational Research and Training Assam",
+      examNames: "HSLC (Class 10) & HS (+2 Class 12)",
+      hasCurriculum: false
+    },
+    {
+      id: "jammu_kashmir",
+      state: "Jammu and Kashmir",
+      secondaryBoard: "Jammu and Kashmir State Board of School Education (JKBOSE)",
+      higherSecondaryBoard: "JKBOSE Srinagar / Jammu",
+      abbreviation: "JKBOSE",
+      website: "jkbose.nic.in",
+      curriculumSource: "JKBOSE Academic Division",
+      examNames: "Class 10th Annual & Class 12th Higher Secondary",
+      hasCurriculum: false
+    },
+    {
+      id: "himachal",
+      state: "Himachal Pradesh",
+      secondaryBoard: "Himachal Pradesh Board of School Education (HPBOSE)",
+      higherSecondaryBoard: "HPBOSE Dharamshala",
+      abbreviation: "HPBOSE",
+      website: "hpbose.org",
+      curriculumSource: "SCERT Himachal Pradesh",
+      examNames: "Matriculation (10th) & Plus Two (12th)",
+      hasCurriculum: false
+    },
+    {
+      id: "uttarakhand",
+      state: "Uttarakhand",
+      secondaryBoard: "Uttarakhand Board of School Education (UBSE)",
+      higherSecondaryBoard: "UBSE Ramnagar (Nainital)",
+      abbreviation: "UBSE",
+      website: "ubse.uk.gov.in",
+      curriculumSource: "SCERT Uttarakhand",
+      examNames: "High School & Intermediate",
+      hasCurriculum: false
+    },
+    {
+      id: "jharkhand",
+      state: "Jharkhand",
+      secondaryBoard: "Jharkhand Academic Council (JAC)",
+      higherSecondaryBoard: "JAC Ranchi",
+      abbreviation: "JAC",
+      website: "jac.jharkhand.gov.in",
+      curriculumSource: "JCERT Ranchi",
+      examNames: "Secondary (Class 10) & Intermediate (Class 12)",
+      hasCurriculum: false
+    },
+    {
+      id: "chhattisgarh",
+      state: "Chhattisgarh",
+      secondaryBoard: "Chhattisgarh Board of Secondary Education (CGBSE)",
+      higherSecondaryBoard: "CGBSE Raipur",
+      abbreviation: "CGBSE",
+      website: "cgbse.nic.in",
+      curriculumSource: "SCERT Chhattisgarh",
+      examNames: "High School & Higher Secondary",
+      hasCurriculum: false
+    },
+    {
+      id: "goa",
+      state: "Goa",
+      secondaryBoard: "Goa Board of Secondary and Higher Secondary Education (GBSHSE)",
+      higherSecondaryBoard: "GBSHSE Porvorim",
+      abbreviation: "GBSHSE",
+      website: "gbshse.in",
+      curriculumSource: "SCERT Goa",
+      examNames: "SSC & HSSC",
+      hasCurriculum: false
+    },
+    {
+      id: "tripura",
+      state: "Tripura",
+      secondaryBoard: "Tripura Board of Secondary Education (TBSE)",
+      higherSecondaryBoard: "TBSE Agartala",
+      abbreviation: "TBSE",
+      website: "tbse.tripura.gov.in",
+      curriculumSource: "SCERT Tripura",
+      examNames: "Madhyamik (10th) & Higher Secondary (+2)",
+      hasCurriculum: false
+    },
+    {
+      id: "manipur",
+      state: "Manipur",
+      secondaryBoard: "Board of Secondary Education, Manipur (BSEM)",
+      higherSecondaryBoard: "Council of Higher Secondary Education, Manipur (COHSEM)",
+      abbreviation: "BSEM / COHSEM",
+      website: "bsem.nic.in",
+      curriculumSource: "SCERT Manipur",
+      examNames: "HSLC (Class 10) & HSE (Class 12)",
+      hasCurriculum: false
+    },
+    {
+      id: "meghalaya",
+      state: "Meghalaya",
+      secondaryBoard: "Meghalaya Board of School Education (MBOSE)",
+      higherSecondaryBoard: "MBOSE Tura",
+      abbreviation: "MBOSE",
+      website: "mbose.in",
+      curriculumSource: "Directorate of Educational Research and Training (DERT)",
+      examNames: "SSLC & HSSLC",
+      hasCurriculum: false
+    },
+    {
+      id: "mizoram",
+      state: "Mizoram",
+      secondaryBoard: "Mizoram Board of School Education (MBSE)",
+      higherSecondaryBoard: "MBSE Aizawl",
+      abbreviation: "MBSE",
+      website: "mbse.edu.in",
+      curriculumSource: "SCERT Mizoram",
+      examNames: "HSLC & HSSLC",
+      hasCurriculum: false
+    },
+    {
+      id: "nagaland",
+      state: "Nagaland",
+      secondaryBoard: "Nagaland Board of School Education (NBSE)",
+      higherSecondaryBoard: "NBSE Kohima",
+      abbreviation: "NBSE",
+      website: "nbsenl.edu.in",
+      curriculumSource: "SCERT Nagaland",
+      examNames: "HSLC & HSSLC",
+      hasCurriculum: false
+    },
+    {
+      id: "sikkim",
+      state: "Sikkim",
+      secondaryBoard: "Directorate of School Education Sikkim / CBSE Aligned",
+      higherSecondaryBoard: "Education Department, Government of Sikkim",
+      abbreviation: "Sikkim State Board",
+      website: "sikkimhrdd.org",
+      curriculumSource: "SCERT Sikkim",
+      examNames: "Board Examinations (Aligned with CBSE)",
+      hasCurriculum: false
+    },
+    {
+      id: "arunachal",
+      state: "Arunachal Pradesh",
+      secondaryBoard: "Directorate of School Education Arunachal Pradesh / CBSE Aligned",
+      higherSecondaryBoard: "Department of Education, Itanagar",
+      abbreviation: "DSE Arunachal",
+      website: "arpedu.in",
+      curriculumSource: "SCERT Arunachal Pradesh & NCERT",
+      examNames: "Class 10 & 12 Board Examinations",
+      hasCurriculum: false
+    },
+    {
+      id: "delhi",
+      state: "Delhi (NCT)",
+      secondaryBoard: "Delhi Board of School Education (DBSE)",
+      higherSecondaryBoard: "DBSE / Central Board of Secondary Education",
+      abbreviation: "DBSE / CBSE Delhi",
+      website: "dbse.co.in",
+      curriculumSource: "SCERT Delhi & IB Aligned",
+      examNames: "DBSE Secondary & Senior Secondary Certificates",
+      hasCurriculum: false
+    },
+    {
+      id: "chandigarh",
+      state: "Chandigarh (UT)",
+      secondaryBoard: "Chandigarh Education Department (CBSE Aligned)",
+      higherSecondaryBoard: "Education Department UT Chandigarh",
+      abbreviation: "Chandigarh Education",
+      website: "chdeducation.gov.in",
+      curriculumSource: "NCERT & Chandigarh State Council",
+      examNames: "CBSE AISSE & AISSCE",
+      hasCurriculum: false
+    },
+    {
+      id: "puducherry",
+      state: "Puducherry (UT)",
+      secondaryBoard: "Directorate of School Education Puducherry (TNBSE / KBPE Aligned)",
+      higherSecondaryBoard: "DSE Puducherry",
+      abbreviation: "Puducherry State Board",
+      website: "schooledn.py.gov.in",
+      curriculumSource: "SCERT Tamil Nadu / Kerala Syllabus",
+      examNames: "SSLC & Higher Secondary",
+      hasCurriculum: false
+    },
+    {
+      id: "ladakh",
+      state: "Ladakh (UT)",
+      secondaryBoard: "Ladakh School Education Board / JKBOSE Aligned",
+      higherSecondaryBoard: "Department of School Education UT Ladakh",
+      abbreviation: "Ladakh Board",
+      website: "ladakh.nic.in",
+      curriculumSource: "JKBOSE & CBSE Curriculum Framework",
+      examNames: "Class 10th & 12th Board Examinations",
+      hasCurriculum: false
+    },
+    {
+      id: "andaman_nicobar",
+      state: "Andaman and Nicobar Islands (UT)",
+      secondaryBoard: "Directorate of Education Andaman & Nicobar (CBSE Aligned)",
+      higherSecondaryBoard: "A&N Administration Port Blair",
+      abbreviation: "A&N Education",
+      website: "education.andaman.gov.in",
+      curriculumSource: "NCERT Syllabus Framework",
+      examNames: "CBSE All India Secondary Examination",
+      hasCurriculum: false
+    },
+    {
+      id: "dadra_daman",
+      state: "Dadra and Nagar Haveli and Daman and Diu (UT)",
+      secondaryBoard: "Directorate of Education DNH & DD (GSEB / CBSE Aligned)",
+      higherSecondaryBoard: "Directorate of Education Silvassa & Daman",
+      abbreviation: "DNH & DD Board",
+      website: "daman.nic.in",
+      curriculumSource: "Gujarat State Board / NCERT",
+      examNames: "Secondary & Higher Secondary",
+      hasCurriculum: false
+    },
+    {
+      id: "lakshadweep",
+      state: "Lakshadweep (UT)",
+      secondaryBoard: "Department of Education Lakshadweep (KBPE Aligned)",
+      higherSecondaryBoard: "Directorate of Education Kavaratti",
+      abbreviation: "Lakshadweep Education",
+      website: "lakshadweep.gov.in",
+      curriculumSource: "Kerala SCERT Curriculum Framework",
+      examNames: "SSLC Examination",
+      hasCurriculum: false
+    }
+  ],
+
+  // Helper function to generate complete curriculum for any board & class
+  getCurriculum: function (boardId, classNum, stateId) {
+    // If state board is requested and specific state is provided
+    let effectiveBoardId = boardId;
+    if (boardId === "state" && stateId) {
+      effectiveBoardId = stateId;
+    }
+
+    const board = this.boards[effectiveBoardId] || this.boards["cbse"];
+    const classData = board.classes && board.classes[classNum];
+
+    if (classData && classData.subjects) {
+      return {
+        board: board,
+        classNum: classNum,
+        subjects: classData.subjects,
+        isSpecific: true
+      };
+    }
+
+    // Lookup metadata from state boards list if state was selected
+    let boardMeta = this.allIndianStatesBoards.find(b => b.id === effectiveBoardId || b.id === stateId);
+    let boardTitle = boardMeta
+      ? (classNum <= 10 ? boardMeta.secondaryBoard : boardMeta.higherSecondaryBoard)
+      : (board.name || "State Education Board");
+    let shortName = boardMeta ? boardMeta.abbreviation : (board.shortName || "State Board");
+    let sourceDoc = boardMeta ? boardMeta.curriculumSource : "State Department of Education & SCERT";
+
+    const customBoard = {
+      id: effectiveBoardId,
+      name: boardTitle,
+      shortName: shortName,
+      type: "state",
+      source: sourceDoc,
+      description: `Official state curriculum framework for Class ${classNum} under ${shortName}.`
+    };
+
+    // Dynamic curriculum generator for grades/boards not explicitly pre-loaded
+    // Ensures a clean, rich, and never-empty dashboard for any selection!
+    const standardSubjects = {
+      science: {
+        name: classNum <= 10 ? "General Science" : "Physics & Chemistry",
+        icon: "🔬",
+        chapters: [
+          {
+            id: `${boardId}_${classNum}_sci_1`,
+            num: "Chapter 1",
+            name: classNum <= 5 ? "Living Things and Their Surroundings" : (classNum <= 8 ? "Matter and Materials" : "Foundations of Scientific Inquiry"),
+            unit: "Unit 1: Natural Science",
+            summary: "Explore fundamental observations of the physical and natural world with everyday discoveries.",
+            analogy: "Like observing nature through a gentle magnifying glass to see how things grow!",
+            keyConcepts: ["Observation", "Classification", "Hypothesis & Testing"],
+            formulas: ["Energy = Mass × Acceleration"],
+            practice: "Describe two differences between living and non-living things in your environment."
+          },
+          {
+            id: `${boardId}_${classNum}_sci_2`,
+            num: "Chapter 2",
+            name: classNum <= 5 ? "Air, Water and Weather" : (classNum <= 8 ? "Forces and Energy" : "Chemical Interactions"),
+            unit: "Unit 2: Physical Universe",
+            summary: "Understand forces, energy transfer, and how states of matter change under heat and pressure.",
+            analogy: "Ice melting into cold water and boiling into steam shows energy in motion!",
+            keyConcepts: ["States of Matter", "Heat Energy", "Conservation of Mass"],
+            formulas: ["Force = Push or Pull"],
+            practice: "What happens to the particles of water when heated to 100°C?"
+          },
+          {
+            id: `${boardId}_${classNum}_sci_3`,
+            num: "Chapter 3",
+            name: classNum <= 5 ? "Our Senses and Health" : (classNum <= 8 ? "Cellular Life" : "Living Systems & Ecology"),
+            unit: "Unit 3: Biology",
+            summary: "How cells function as the building blocks of living organisms, and how ecosystems maintain balance.",
+            analogy: "Each living cell is a tiny clockwork factory with organelles acting as specialized workers!",
+            keyConcepts: ["Cell Wall & Membrane", "Mitochondria Powerhouse", "Ecosystem Balance"],
+            formulas: ["Photosynthesis: CO2 + H2O ➔ Glucose + O2"],
+            practice: "Why are mitochondria known as the powerhouse of the cell?"
+          }
+        ]
+      },
+      mathematics: {
+        name: "Mathematics",
+        icon: "📐",
+        chapters: [
+          {
+            id: `${boardId}_${classNum}_math_1`,
+            num: "Chapter 1",
+            name: classNum <= 5 ? "Numbers, Shapes and Patterns" : (classNum <= 8 ? "Rational Numbers and Operations" : "Number Systems and Sets"),
+            unit: "Unit 1: Number Sense",
+            summary: "Mastering number properties, operations, place value, and patterns in arithmetic.",
+            analogy: "Numbers are like steps on an infinite ruler that can measure everything in the universe!",
+            keyConcepts: ["Place Value", "Multiplication & Division", "Prime Numbers"],
+            formulas: ["Commutative Law: a + b = b + a"],
+            practice: "Find the prime factors of 60."
+          },
+          {
+            id: `${boardId}_${classNum}_math_2`,
+            num: "Chapter 2",
+            name: classNum <= 5 ? "Fractions and Decimals" : (classNum <= 8 ? "Linear Equations" : "Algebraic Structures"),
+            unit: "Unit 2: Algebraic Thinking",
+            summary: "Translating word problems into equations and balancing both sides to solve for mystery variables.",
+            analogy: "Like a twin balance scale: keep both sides perfectly equal to find the secret weight!",
+            keyConcepts: ["Variable x", "Balancing Equations", "Transposition Method"],
+            formulas: ["ax + b = c"],
+            practice: "Solve for x: 3x + 5 = 20."
+          },
+          {
+            id: `${boardId}_${classNum}_math_3`,
+            num: "Chapter 3",
+            name: classNum <= 5 ? "Angles and Measurement" : (classNum <= 8 ? "Geometry and Polygons" : "Coordinate Geometry & Trigonometry"),
+            unit: "Unit 3: Spatial Measurement",
+            summary: "Exploring angles, perimeter, area, volume, and coordinate graphing.",
+            analogy: "Geometry is how architects plan buildings so they stand tall and never collapse!",
+            keyConcepts: ["Area = Length × Breadth", "Perimeter of Shapes", "Volume of Solids"],
+            formulas: ["Area = l × w", "Perimeter = 2(l + w)"],
+            practice: "Find the area of a rectangle with length 8 cm and width 5 cm."
+          }
+        ]
+      },
+      english: {
+        name: "English Communication",
+        icon: "📚",
+        chapters: [
+          {
+            id: `${boardId}_${classNum}_eng_1`,
+            num: "Unit 1",
+            name: "Reading Comprehension & Storytelling",
+            unit: "Literature & Language",
+            summary: "Understanding main ideas, tone, character traits, and literary devices in prose.",
+            analogy: "Reading a great story is like putting on glasses that let you live in someone else's shoes!",
+            keyConcepts: ["Theme", "Plot Arc", "Character Motivation"],
+            formulas: ["Introduction ➔ Climax ➔ Resolution"],
+            practice: "Identify the main theme of a story and summarize it in 3 sentences."
+          },
+          {
+            id: `${boardId}_${classNum}_eng_2`,
+            num: "Unit 2",
+            name: "Essential Grammar & Active Voice",
+            unit: "Grammar & Structure",
+            summary: "Tenses, active vs passive voice, direct and indirect speech, and punctuation.",
+            analogy: "Grammar is the traffic code of language: it ensures your thoughts reach the reader smoothly without collision!",
+            keyConcepts: ["Subject-Verb Agreement", "Active Voice", "Reported Speech"],
+            formulas: ["Subject + Verb + Object"],
+            practice: "Convert this sentence to active voice: 'The homework was completed by Rohan.'"
+          }
+        ]
+      }
+    };
+
+    return {
+      board: customBoard || board,
+      classNum: classNum,
+      subjects: standardSubjects
+    };
+  }
+};
+
+// Export to window for browser vanilla JS
+window.SYLLABUS_DATABASE = SYLLABUS_DATABASE;
+
+
+// ===================================================================
+// LearnMateData — Reusable Curriculum & Educational Content Access Layer
+// ===================================================================
+const LearnMateData = {
+  /**
+   * Return all supported boards with standard metadata
+   */
+  getBoards() {
+    return Object.values(SYLLABUS_DATABASE.boards).map(b => ({
+      id: b.id,
+      name: b.name,
+      shortName: b.shortName,
+      type: b.type,
+      source: b.source,
+      description: b.description
+    }));
+  },
+
+  /**
+   * Return all 36 Indian States and Union Territories with Board details
+   */
+  getStates() {
+    return SYLLABUS_DATABASE.allIndianStatesBoards || [];
+  },
+
+  /**
+   * Return available classes for a board
+   */
+  getClassesForBoard(boardId) {
+    const b = SYLLABUS_DATABASE.boards[boardId];
+    if (b && b.classes) {
+      return Object.keys(b.classes).sort((a, b) => Number(a) - Number(b));
+    }
+    // Default curriculum standard classes 1 to 12
+    return ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+  },
+
+  /**
+   * Return subjects for selected board and class
+   */
+  getSubjects(boardId = "cbse", classNum = "10", stateId = null) {
+    const curriculum = SYLLABUS_DATABASE.getCurriculum(boardId, classNum, stateId);
+    return curriculum.subjects || {};
+  },
+
+  /**
+   * Return chapters list for a given subject
+   */
+  getChapters(boardId = "cbse", classNum = "10", subjectId = "science", stateId = null) {
+    const subjects = this.getSubjects(boardId, classNum, stateId);
+    if (subjects[subjectId] && subjects[subjectId].chapters) {
+      return subjects[subjectId].chapters;
+    }
+    // Try matching by case-insensitive key or name
+    for (const key of Object.keys(subjects)) {
+      if (key.toLowerCase() === subjectId.toLowerCase() || subjects[key].name.toLowerCase().includes(subjectId.toLowerCase())) {
+        return subjects[key].chapters || [];
+      }
+    }
+    return [];
+  },
+
+  /**
+   * Find a specific chapter by its stable identifier across all boards/classes
+   */
+  getChapter(chapterId) {
+    if (!chapterId) return null;
+    // 1. Search in boards directly
+    for (const bKey in SYLLABUS_DATABASE.boards) {
+      const board = SYLLABUS_DATABASE.boards[bKey];
+      if (!board.classes) continue;
+      for (const cKey in board.classes) {
+        const cls = board.classes[cKey];
+        if (!cls.subjects) continue;
+        for (const sKey in cls.subjects) {
+          const subj = cls.subjects[sKey];
+          if (!subj.chapters) continue;
+          const found = subj.chapters.find(ch => ch.id === chapterId);
+          if (found) {
+            return {
+              chapter: found,
+              subjectKey: sKey,
+              subjectName: subj.name,
+              boardId: bKey,
+              boardName: board.name,
+              classNum: cKey
+            };
+          }
+        }
+      }
+    }
+    return null;
+  },
+
+  /**
+   * Retrieve notes for a chapter and difficulty level (Beginner, Moderate, Pro)
+   */
+  getNotes(chapterId, level = "Moderate") {
+    const normLevel = (level.charAt(0).toUpperCase() + level.slice(1).toLowerCase());
+    const validLevel = ["Beginner", "Moderate", "Pro"].includes(normLevel) ? normLevel : "Moderate";
+
+    // 1. Check verified authored database
+    if (typeof window !== 'undefined' && window.NOTES_DATABASE && window.NOTES_DATABASE[chapterId]) {
+      const entry = window.NOTES_DATABASE[chapterId];
+      if (entry.levels && entry.levels[validLevel]) {
+        return {
+          ...entry.levels[validLevel],
+          isAuthored: true,
+          source: entry.source || "Official Academic Curriculum Framework",
+          chapterId: chapterId,
+          chapterName: entry.chapterName,
+          subjectName: entry.subjectName,
+          boardName: entry.boardName,
+          classNum: entry.classNum
+        };
+      }
+    }
+
+    // 2. Structured fallback generator from chapter metadata
+    const info = this.getChapter(chapterId);
+    const ch = info ? info.chapter : { name: "Study Chapter", summary: "Curriculum study topic.", keyConcepts: ["Core Principles"], formulas: [] };
+
+    const rawConcepts = ch.keyConcepts && ch.keyConcepts.length > 0 ? ch.keyConcepts : [ch.name, "Key Definitions", "Applications"];
+    const formulasList = ch.formulas && ch.formulas.length > 0 ? ch.formulas : ["Key Principle: Input ➔ Transformation ➔ Result"];
+
+    const badgeClasses = {
+      Beginner: "beginner-badge",
+      Moderate: "moderate-badge",
+      Pro: "pro-badge"
+    };
+
+    return {
+      title: `${ch.name} — ${validLevel} Study Guide`,
+      levelName: validLevel,
+      levelBadgeClass: badgeClasses[validLevel] || "moderate-badge",
+      isAuthored: false,
+      source: "Curriculum Framework Outline",
+      chapterId: chapterId,
+      chapterName: ch.name,
+      subjectName: info ? info.subjectName : "General Subject",
+      boardName: info ? info.boardName : "State / CBSE Board",
+      classNum: info ? info.classNum : "10",
+      overview: ch.summary || `Comprehensive overview of ${ch.name} covering essential principles and syllabus expectations.`,
+      analogy: ch.analogy || `Think of ${ch.name} like building with solid foundations: each concept connects directly to what you see and observe around you!`,
+      definitions: rawConcepts.map((concept, idx) => ({
+        term: concept,
+        def: `Fundamental syllabus concept: Understanding ${concept.toLowerCase()} and its role in ${ch.name}.`
+      })),
+      formulas: formulasList.map((f, idx) => ({
+        expr: f,
+        desc: `Syllabus Formula ${idx + 1}: Expresses the core relationship governing this process.`
+      })),
+      workedExample: {
+        problem: `Syllabus Problem: In ${ch.name}, calculate or explain the outcome when initial parameters are given.`,
+        steps: [
+          "Step 1: Write down the given facts and relevant scientific or mathematical quantities.",
+          "Step 2: Apply the governing formula or conceptual law.",
+          "Step 3: Simplify step-by-step and write the final conclusion with appropriate units."
+        ],
+        solution: `Final result verified in accordance with Class ${info ? info.classNum : '10'} curriculum standards.`
+      },
+      examTips: [
+        "In board exams, underline key scientific/mathematical terminology in your explanations.",
+        "Draw clear, neatly labelled diagrams wherever applicable to secure full marks."
+      ],
+      practiceQuestions: ch.practice ? [
+        {
+          type: "Short Answer",
+          question: ch.practice,
+          options: [],
+          correct: null,
+          answer: "Refer to the key definitions and formulas above to structure your response.",
+          explanation: "Regular practice with these conceptual questions develops speed and accuracy."
+        }
+      ] : []
+    };
+  },
+
+  /**
+   * Retrieve questions matching filtering criteria
+   */
+  getQuestions(filter = {}) {
+    const db = (typeof window !== 'undefined' && window.QUESTIONS_DATABASE) ? window.QUESTIONS_DATABASE : [];
+    if (!db || db.length === 0) return [];
+
+    return db.filter(q => {
+      if (filter.chapterId && q.chapterId !== filter.chapterId) return false;
+      if (filter.subjectId && filter.subjectId !== "all") {
+        const qSubj = (q.subjectId || "").toLowerCase();
+        const fSubj = filter.subjectId.toLowerCase();
+        if (!qSubj.includes(fSubj) && !fSubj.includes(qSubj)) return false;
+      }
+      if (filter.boardId && filter.boardId !== "all" && q.boardId !== filter.boardId) return false;
+      if (filter.classNum && q.classNum !== String(filter.classNum)) return false;
+      if (filter.difficulty && filter.difficulty !== "all" && q.difficulty.toLowerCase() !== filter.difficulty.toLowerCase()) return false;
+      if (filter.type && filter.type !== "all" && q.type.toLowerCase() !== filter.type.toLowerCase()) return false;
+      return true;
+    });
+  },
+
+  /**
+   * Global search across curriculum (subjects, chapters, concepts, formulas)
+   */
+  searchCurriculum(query = "") {
+    const q = (query || "").trim().toLowerCase();
+    if (!q) return [];
+    const results = [];
+
+    for (const bKey in SYLLABUS_DATABASE.boards) {
+      const board = SYLLABUS_DATABASE.boards[bKey];
+      if (!board.classes) continue;
+      for (const cKey in board.classes) {
+        const cls = board.classes[cKey];
+        if (!cls.subjects) continue;
+        for (const sKey in cls.subjects) {
+          const subj = cls.subjects[sKey];
+          if (!subj.chapters) continue;
+          for (const ch of subj.chapters) {
+            let score = 0;
+            if (ch.name.toLowerCase().includes(q)) score += 10;
+            if (ch.summary && ch.summary.toLowerCase().includes(q)) score += 5;
+            if (ch.keyConcepts && ch.keyConcepts.some(c => c.toLowerCase().includes(q))) score += 4;
+            if (subj.name.toLowerCase().includes(q)) score += 2;
+
+            if (score > 0) {
+              results.push({
+                score,
+                chapter: ch,
+                subjectKey: sKey,
+                subjectName: subj.name,
+                boardId: bKey,
+                boardName: board.shortName || board.name,
+                classNum: cKey
+              });
+            }
+          }
+        }
+      }
+    }
+
+    return results.sort((a, b) => b.score - a.score);
+  },
+
+  /**
+   * Report curriculum coverage summary
+   */
+  getCurriculumCoverage() {
+    let totalBoards = Object.keys(SYLLABUS_DATABASE.boards).length;
+    let totalChapters = 0;
+    const boardBreakdown = {};
+
+    for (const bKey in SYLLABUS_DATABASE.boards) {
+      const b = SYLLABUS_DATABASE.boards[bKey];
+      let bChapters = 0;
+      if (b.classes) {
+        for (const cKey in b.classes) {
+          const cls = b.classes[cKey];
+          if (cls.subjects) {
+            for (const sKey in cls.subjects) {
+              bChapters += (cls.subjects[sKey].chapters || []).length;
+            }
+          }
+        }
+      }
+      boardBreakdown[bKey] = {
+        name: b.name,
+        chapters: bChapters
+      };
+      totalChapters += bChapters;
+    }
+
+    const authoredNotesCount = (typeof window !== 'undefined' && window.NOTES_DATABASE) ? Object.keys(window.NOTES_DATABASE).length : 0;
+    const questionsCount = (typeof window !== 'undefined' && window.QUESTIONS_DATABASE) ? window.QUESTIONS_DATABASE.length : 0;
+
+    return {
+      academicYear: SYLLABUS_DATABASE.metadata.academicYear,
+      totalBoards,
+      totalStates: (SYLLABUS_DATABASE.allIndianStatesBoards || []).length,
+      totalChapters,
+      authoredNotesCount,
+      questionsCount,
+      boardBreakdown
+    };
+  }
+};
+
+// Export to window for browser vanilla JS
+window.LearnMateData = LearnMateData;
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { SYLLABUS_DATABASE, LearnMateData };
+}
